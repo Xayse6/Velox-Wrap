@@ -1,108 +1,88 @@
 import { Link } from "react-router-dom";
+import "../../css/fragments/navbar.css";
 
-function NavBar() {
+export default function navbar() {
   return (
-    <nav className="navbar navbar-expand-lg">
-      <div className="container">
+    <nav className="navbar">
+      <div className="navbar-container">
 
-        <Link
-          className="navbar-brand d-flex align-items-center"
-          to="/"
-        >
+        {/* Logo */}
+        <Link className="navbar-brand" to="/">
           <img
             src="/src/assets/logo.png"
-            height="55"
-            className="me-3 rounded-3 shadow-lg"
             alt="Velox Wrap"
+            className="navbar-logo"
           />
 
-          <span
-            className="fw-bold fs-3 text-info"
-            style={{ textShadow: "0 0 30px #00d4ff" }}
-          >
+          <span className="navbar-title">
             Velox Wrap
           </span>
         </Link>
 
         {/* Botão Mobile */}
         <button
-          className="navbar-toggler border-info"
+          className="navbar-toggle"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
           aria-label="Abrir menu"
-        >rios
-          <span className="navbar-toggler-icon"></span>
+        >
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
 
         {/* Menu */}
-        <div
-          className="collapse navbar-collapse"
-          id="navbarNav"
-        >
-          <ul className="navbar-nav ms-auto align-items-center gap-4">
+        <div className="navbar-menu">
+          <ul className="navbar-nav">
 
-            <li className="nav-item">
-              <Link
-                className="nav-link text-white"
-                to="/galeria"
-              >
+            <li>
+              <Link className="nav-link" to="/galeria">
                 Galeria
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link
-                className="nav-link text-white"
-                to="/servicos"
-              >
+            <li>
+              <Link className="nav-link" to="/servicos">
                 Serviços
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link
-                className="nav-link text-white"
-                to="/contato"
-              >
+            <li>
+              <Link className="nav-link" to="/contato">
                 Contato
               </Link>
             </li>
-            <li className="nav-item">
-              <Link
-                to="/usuarios"
-                className="btn btn-outline-info"
-              >
+
+            <li>
+              <Link className="nav-button" to="/usuarios">
                 Usuários
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link
-                to="/veiculos"
-                className="btn btn-outline-info"
-              >
+            <li>
+              <Link className="nav-button" to="/veiculos">
                 Veículos
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link
-                to="/modelos"
-                className="btn btn-outline-info"
-              >
+            <li>
+              <Link className="nav-button" to="/modelos">
                 Modelos
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link
-                to="/marcas"
-                className="btn btn-outline-info"
-              >
+            <li>
+              <Link className="nav-button" to="/marcas">
                 Marcas
+              </Link>
+            </li>
+            <li>
+              <Link className="nav-button" to="/cadastro">
+                Cadastro
+              </Link>
+            </li>
+            <li>
+              <Link className="nav-button" to="/login">
+                Login
               </Link>
             </li>
 
@@ -113,6 +93,3 @@ function NavBar() {
     </nav>
   );
 }
-
-export default NavBar;
-

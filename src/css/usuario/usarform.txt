@@ -1,0 +1,343 @@
+/* ================================
+   CONTAINER
+================================ */
+
+.usuarios-form-container {
+  width: 92%;
+  max-width: 450px;
+
+  margin: 40px auto;
+
+  color: #fff;
+}
+
+
+/* ================================
+   CABEÇALHO
+================================ */
+
+.usuarios-header {
+  display: flex;
+  flex-direction: column;
+
+  align-items: stretch;
+
+  padding: 30px;
+
+  background: #07111c;
+
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 212, 255, 0.05);
+}
+
+
+/* ================================
+   TÍTULO
+================================ */
+
+.usuarios-header h1 {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+
+/* ================================
+   DESCRIÇÃO
+================================ */
+
+.usuarios-header > div:nth-child(2) {
+  margin-bottom: 25px;
+}
+
+.usuarios-header p {
+  margin: 7px 0 0;
+
+  color: #8b9aaa;
+
+  font-size: 15px;
+}
+
+
+/* ================================
+   CONTAINER DO FORMULÁRIO
+================================ */
+
+.table-container {
+  width: 100%;
+}
+
+.usuarios-table {
+  width: 100%;
+
+  padding: 0;
+
+  background: #0c1b2a;
+
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+
+/* ================================
+   FORMULÁRIO
+================================ */
+
+.UserForm-form {
+  padding: 25px;
+}
+
+.UserForm-form form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+/* ================================
+   GRUPOS DOS CAMPOS
+================================ */
+
+.UserForm-form form > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* ================================
+   LABEL
+================================ */
+
+.UserForm-form label {
+  color: #00d4ff;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* ================================
+   INPUT
+================================ */
+
+.UserForm-form input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  box-sizing: border-box;
+
+  color: #ffffff;
+
+  background: #07111c;
+
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 7px;
+
+  outline: none;
+
+  font-size: 14px;
+
+  transition: all 0.3s ease;
+}
+
+
+/* Placeholder */
+
+.UserForm-form input::placeholder {
+  color: #657585;
+}
+
+
+/* Foco */
+
+.UserForm-form input:focus {
+  border-color: #00d4ff;
+
+  background: #091724;
+
+  box-shadow:
+    0 0 10px rgba(0, 212, 255, 0.15);
+}
+
+
+/* ================================
+   BOTÃO
+================================ */
+
+.UserForm-form button {
+  width: 100%;
+
+  padding: 13px 18px;
+
+  margin-top: 5px;
+
+  color: #ffffff;
+
+  background: #008fbd;
+
+  border: 1px solid #00d4ff;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+
+/* Hover */
+
+.UserForm-form button:hover {
+  background: #00afd6;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+
+/* Clique */
+
+.UserForm-form button:active {
+  transform: translateY(0);
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.UserForm-footer {
+  padding: 18px 25px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  text-align: center;
+}
+
+.UserForm-footer p {
+  margin: 0;
+
+  color: #8b9aaa;
+
+  font-size: 14px;
+}
+
+
+/* ================================
+   LINK
+================================ */
+
+.UserForm-footer .no-underline {
+  color: #00d4ff;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.UserForm-footer .no-underline:hover {
+  color: #ffffff;
+
+  text-shadow:
+    0 0 8px rgba(0, 212, 255, 0.6);
+}
+
+
+/* ================================
+   VALIDAÇÃO DOS INPUTS
+================================ */
+
+.UserForm-form input:valid {
+  border-color: rgba(0, 212, 255, 0.25);
+}
+
+.UserForm-form input:invalid:not(:placeholder-shown) {
+  border-color: rgba(255, 77, 90, 0.5);
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 900px) {
+
+  .usuarios-form-container {
+    width: 95%;
+
+    margin: 25px auto;
+  }
+
+  .usuarios-header {
+    padding: 25px;
+  }
+
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .usuarios-form-container {
+    width: 94%;
+
+    margin: 20px auto;
+  }
+
+  .usuarios-header {
+    padding: 20px;
+  }
+
+  .usuarios-header h1 {
+    font-size: 23px;
+  }
+
+  .usuarios-header p {
+    font-size: 13px;
+  }
+
+  .usuarios-table {
+    border-radius: 8px;
+  }
+
+  .UserForm-form {
+    padding: 20px;
+  }
+
+  .UserForm-form form {
+    gap: 17px;
+  }
+
+  .UserForm-footer {
+    padding: 16px 20px;
+  }
+
+}

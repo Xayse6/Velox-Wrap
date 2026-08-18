@@ -1,0 +1,323 @@
+/* ================================
+   CONTAINER
+================================ */
+
+.usuarios-container {
+  width: 92%;
+  max-width: 1500px;
+  margin: 40px auto;
+  color: #fff;
+}
+
+
+/* ================================
+   CABEÇALHO
+================================ */
+
+.usuarios-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 25px 30px;
+  margin-bottom: 25px;
+
+  background: #07111c;
+
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+
+  box-shadow:
+    0 0 20px rgba(0, 212, 255, 0.05);
+}
+
+.usuarios-header h1 {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.usuarios-header p {
+  margin: 7px 0 0;
+
+  color: #8b9aaa;
+
+  font-size: 15px;
+}
+
+
+/* ================================
+   BOTÃO NOVO USUÁRIO
+================================ */
+
+.btn-novo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 11px 18px;
+
+  color: #ffffff;
+  background: #00a86b;
+
+  border: 1px solid #00d084;
+  border-radius: 7px;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.btn-novo:hover {
+  color: #ffffff;
+  background: #00c982;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 15px rgba(0, 201, 130, 0.4);
+}
+
+
+/* ================================
+   CARD
+================================ */
+
+.usuarios-card {
+  padding: 25px;
+
+  background: #07111c;
+
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 12px;
+
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ================================
+   TABELA
+================================ */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.usuarios-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+}
+
+
+/* Cabeçalho */
+
+.usuarios-table thead {
+  background: #0c1b2a;
+}
+
+.usuarios-table th {
+  padding: 16px;
+
+  color: #00d4ff;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+
+  white-space: nowrap;
+}
+
+
+/* Corpo */
+
+.usuarios-table td {
+  padding: 15px 16px;
+
+  color: #d8e1e8;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+/* Hover */
+
+.usuarios-table tbody tr {
+  transition: all 0.25s ease;
+}
+
+.usuarios-table tbody tr:hover {
+  background: rgba(0, 212, 255, 0.05);
+}
+
+
+/* ================================
+   ALINHAMENTO
+================================ */
+
+.text-center {
+  text-align: center !important;
+}
+
+
+/* ================================
+   AÇÕES
+================================ */
+
+.acoes {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+
+/* Botões */
+
+.btn-editar,
+.btn-excluir {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+
+/* ================================
+   EDITAR
+================================ */
+
+.btn-editar {
+  color: #ffc107;
+
+  background: rgba(255, 193, 7, 0.08);
+
+  border: 1px solid rgba(255, 193, 7, 0.4);
+
+  text-decoration: none;
+}
+
+.btn-editar:hover {
+  color: #111111;
+
+  background: #ffc107;
+
+  box-shadow:
+    0 0 15px rgba(255, 193, 7, 0.5);
+
+  transform: translateY(-2px);
+}
+
+
+/* ================================
+   EXCLUIR
+================================ */
+
+.btn-excluir {
+  color: #ff4d5a;
+
+  background: rgba(255, 77, 90, 0.08);
+
+  border: 1px solid rgba(255, 77, 90, 0.4);
+}
+
+.btn-excluir:hover {
+  color: #ffffff;
+
+  background: #dc3545;
+
+  box-shadow:
+    0 0 15px rgba(220, 53, 69, 0.5);
+
+  transform: translateY(-2px);
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 900px) {
+
+  .usuarios-container {
+    width: 95%;
+    margin: 25px auto;
+  }
+
+  .usuarios-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+  .btn-novo {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .usuarios-card {
+    padding: 15px;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .usuarios-container {
+    width: 94%;
+  }
+
+  .usuarios-header {
+    padding: 20px;
+  }
+
+  .usuarios-header h1 {
+    font-size: 23px;
+  }
+
+  .usuarios-header p {
+    font-size: 13px;
+  }
+
+  .usuarios-card {
+    padding: 10px;
+  }
+
+  .usuarios-table {
+    min-width: 800px;
+  }
+}

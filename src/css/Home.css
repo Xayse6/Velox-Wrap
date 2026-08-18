@@ -1,0 +1,30 @@
+.home-page {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 50px;
+    box-sizing: border-box;
+
+    align-items: center;
+
+}
+
+.home-itens{
+    justify-content: space-between;
+    border: 1px solid red;
+}
+
+.home-txt h1{
+    text-align: center;
+}
+
+.home-itens2{
+    justify-content: space-between;
+    border: 1px solid rgb(247, 0, 255);
+}
+
+.home-txt2 h1{
+    text-align: center;
+}
