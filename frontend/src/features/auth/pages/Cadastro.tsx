@@ -1,15 +1,21 @@
-import "../../../css/usuario/usuarioForm.css";
+import "../css/usuarioForm.css";
 
 import { Link, useNavigate } from "react-router-dom";
-import useUserForm  from "../../../hooks/userForm";
+import useUserForm  from "../hooks/useUserForm";
 
 export default function UsuarioForm() {
 
     const {
         nome,
-        setNome,
         cpf,
+        email,
+        senha,
+
+        setNome,
         setCpf,
+        setEmail,
+        setSenha,
+
         carregando,
         cadastrar,
         mensagem,
@@ -117,6 +123,42 @@ export default function UsuarioForm() {
                                 required
                             />
 
+                        </div>
+
+                        <div>
+                            <label htmlFor="email">
+                                E-mail
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Digite seu e-mail"
+                                value={email}
+                                onChange={(event) =>
+                                    setEmail(event.target.value)
+                                }
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="senha">
+                                Senha
+                            </label>
+
+                            <input
+                                type="password"
+                                id="senha"
+                                name="senha"
+                                placeholder="Digite sua senha"
+                                value={senha}
+                                onChange={(event) =>
+                                    setSenha(event.target.value)
+                                }
+                                required
+                            />
                         </div>
 
                         <button

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import "../../../css/usuario/usuario.css";
-import  Users  from "../../../hooks/users";
 
-export default function Marca() {
+import "../css/usuario.css";
+
+import  Users  from "../hooks/useUsers";
+
+export default function Usuarios() {
 
     const {
         usuarios,
@@ -55,6 +57,7 @@ export default function Marca() {
                                     <th>ID</th>
                                     <th>Nome</th>
                                     <th>CPF</th>
+                                    <th>Email</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -76,18 +79,19 @@ export default function Marca() {
                                         <td>
                                             {usuario.cpf}
                                         </td>
+                                        <td>
+                                            {usuario.email}
+                                        </td>
 
                                         <td className="acoes">
-
                                           <Link
-                                              to={`/usuario/editar/${usuario.idUsuario}`}
+                                              to={"/cadastro"}
                                               className="btn-editar"
                                               title="Alterar"
                                           >
                                               <i className="fas fa-edit"></i>
                                               Alterar
                                           </Link>
-
                                           <button
                                               type="button"
                                               className="btn-excluir"
