@@ -16,7 +16,7 @@ import Footer from "./Screens/fragments/footer";
 
 import Cadastro from "./Screens/cadastro/usuario/usuarioForm";
 
-function App() {
+export default function App() {
   return (
   <>
   <nav>
@@ -38,5 +38,3 @@ function App() {
   </>
   );
 }
-
-export default App;

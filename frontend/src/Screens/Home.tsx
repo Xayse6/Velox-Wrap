@@ -1,6 +1,6 @@
-import "../css/home.css"
+import "../css/Home.css"
 
-export default function Home (){
+export default function home (){
     return(
         <div className="home-page">
             <div className="home-itens">
