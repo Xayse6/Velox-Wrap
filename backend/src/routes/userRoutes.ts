@@ -1,28 +1,32 @@
 import { Router } from "express";
+import bcrypt from "bcrypt";
 import { pool } from "../config/database";
 
 const router = Router();
 
 router.post("/usuarios", async (req, res) => {
     try {
-        const { nome, cpf } = req.body;
+        const { nome, cpf, email, senha } = req.body;
 
-        if (!nome || !cpf) {
+        if (!nome || !cpf || !email || !senha) {
             return res.status(400).json({
-                mensagem: "Nome e CPF são obrigatórios"
+                mensagem: "Nome, CPF, e-mail e senha são obrigatórios"
             });
         }
 
+        const senhaHash = await bcrypt.hash(senha, 10);
+
         const resultado = await pool.query(
             `
-            INSERT INTO usuario (nome, cpf)
-            VALUES ($1, $2)
+            INSERT INTO usuarios (nome, cpf, email, senha)
+            VALUES ($1, $2, $3, $4)
             RETURNING
-                id AS "idUsuario",
+                idUsuario,
                 nome,
-                cpf
+                cpf,
+                email
             `,
-            [nome, cpf]
+            [nome, cpf, email, senhaHash]
         );
 
         return res.status(201).json(resultado.rows[0]);
@@ -43,11 +47,12 @@ router.get("/usuarios", async (_req, res) => {
     try {
         const resultado = await pool.query(`
             SELECT
-                id AS "idUsuario",
+                idUsuario,
                 nome,
-                cpf
-            FROM usuario
-            ORDER BY id
+                cpf,
+                email
+            FROM usuarios
+            ORDER BY idUsuario
         `);
 
         return res.status(200).json(resultado.rows);
@@ -69,7 +74,7 @@ router.delete("/usuarios/:id", async (req, res) => {
         const { id } = req.params;
 
         const resultado = await pool.query(
-            "DELETE FROM usuario WHERE id = $1 RETURNING id",
+            "DELETE FROM usuarios WHERE idUsuario = $1 RETURNING idUsuario",
             [id]
         );
 

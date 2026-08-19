@@ -4,6 +4,7 @@ interface Usuario {
     idUsuario: number;
     nome: string;
     cpf: string;
+    email: string;
 }
 
 export default function Users() {

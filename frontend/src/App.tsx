@@ -1,20 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import "./css/App.css";
 
+import "./styles/global.css";
 
-import Home from "./Screens/home";
-import Usuarios from "./Screens/cadastro/usuario/usuarios";
-import Veiculos from "./Screens/cadastro/veiculo/veiculos";
+import Navbar from "./components/Navbar.tsx";
+import Footer from "./components/Footer.tsx";
 
+import Home from "./features/home/pages/Home.tsx";
 
-import Modelos from "./Screens/cadastro/modelo/modelo";
-import Marcas from "./Screens/cadastro/marca/marca";
+import Usuarios from "./features/usuario/pages/Usuarios.tsx";
 
-
-import Navbar from "./Screens/fragments/navbar";
-import Footer from "./Screens/fragments/footer";
-
-import Cadastro from "./Screens/cadastro/usuario/usuarioForm";
+import Cadastro from "./features/auth/pages/Cadastro.tsx"
 
 export default function App() {
   return (
@@ -26,10 +21,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/Usuarios" element={<Usuarios />} />
-      <Route path="/Veiculos" element={<Veiculos />} />
-      <Route path="/Modelos" element={<Modelos />} />
-      <Route path="/Marcas" element={<Marcas />} />
-      <Route path="/cadastro" element={<Cadastro />} />
+      <Route path="/Cadastro" element={<Cadastro />} />
     </Routes>
   </main>
   <footer>
