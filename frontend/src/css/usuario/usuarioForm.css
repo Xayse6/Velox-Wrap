@@ -183,3 +183,108 @@
   border-color: rgba(255, 77, 90, 0.5);
 }
 
+
+
+
+/* =========================
+   MENSAGEM
+========================= */
+
+.mensagem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 20px 25px 0;
+    padding: 14px 16px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    animation: aparecerMensagem 0.3s ease;
+}
+
+.mensagem > i {
+    font-size: 18px;
+}
+
+.mensagem span {
+    flex: 1;
+}
+
+/* Botão fechar */
+
+.mensagem button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px;
+
+    color: inherit;
+    background: transparent;
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.mensagem button:hover {
+    transform: scale(1.15);
+    opacity: 0.8;
+}
+
+
+/* =========================
+   SUCESSO
+========================= */
+
+.mensagem.sucesso {
+    color: #00ff9d;
+
+    background: rgba(0, 255, 157, 0.08);
+
+    border: 1px solid rgba(0, 255, 157, 0.35);
+
+    box-shadow:
+        0 0 15px rgba(0, 255, 157, 0.08);
+}
+
+
+/* =========================
+   ERRO
+========================= */
+
+.mensagem.erro {
+    color: #ff4d5a;
+
+    background: rgba(255, 77, 90, 0.08);
+
+    border: 1px solid rgba(255, 77, 90, 0.35);
+
+    box-shadow:
+        0 0 15px rgba(255, 77, 90, 0.08);
+}
+
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes aparecerMensagem {
+
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}

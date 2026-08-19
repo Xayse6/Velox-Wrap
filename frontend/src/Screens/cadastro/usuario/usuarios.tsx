@@ -1,114 +1,121 @@
 import { Link } from "react-router-dom";
 import "../../../css/usuario/usuario.css";
+import  Users  from "../../../hooks/users";
 
-interface Usuario {
-  idUsuario: number;
-  nome: string;
-  cpf: string;
-  email: string;
-  dataNascimento: string;
-}
+export default function Usuarios() {
 
-export default function usuarios() {
-  const usuarios: Usuario[] = [
-    {
-      idUsuario: 1,
-      nome: "João Silva",
-      cpf: "123.456.789-00",
-      email: "joao@email.com",
-      dataNascimento: "1995-05-20",
-    },
-    {
-      idUsuario: 2,
-      nome: "Maria Santos",
-      cpf: "987.654.321-00",
-      email: "maria@email.com",
-      dataNascimento: "1998-10-15",
-    },
-  ];
+    const {
+        usuarios,
+        carregando,
+        erro,
+        exUser,
+    } = Users();
 
-  return (
-    <main className="usuarios-container">
+    return (
+        <main className="usuarios-container">
 
-      <section className="usuarios-header">
-        <div>
-          <h1>Usuários</h1>
-          <p>
-            Gerenciamento completo de usuários do sistema
-          </p>
-        </div>
+            <section className="usuarios-header">
 
-        <Link to="/NovoUsuario" className="btn-novo">
-          <i className="fas fa-user-plus"></i>
-          Novo Usuário
-        </Link>
-      </section>
+                <div>
+                    <h1>Usuários</h1>
 
-      <section className="usuarios-card">
-        <div className="table-container">
+                    <p>
+                        Gerenciamento completo de usuários do sistema
+                    </p>
+                </div>
 
-          <table className="usuarios-table">
+                <Link
+                    to="/cadastro"
+                    className="btn-novo"
+                >
+                    <i className="fas fa-user-plus"></i>
+                    Novo Usuário
+                </Link>
 
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>E-mail</th>
-                <th>Nascimento</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
+            </section>
 
-            <tbody>
-              {usuarios.map((usuario) => (
-                <tr key={usuario.idUsuario}>
+            <section className="usuarios-card">
 
-                  <td className="text-center">
-                    {usuario.idUsuario}
-                  </td>
+                <div className="table-container">
 
-                  <td>{usuario.nome}</td>
+                    {carregando && (
+                        <p>Carregando usuários...</p>
+                    )}
 
-                  <td>{usuario.cpf}</td>
+                    {erro && (
+                        <p>{erro}</p>
+                    )}
 
-                  <td>{usuario.email}</td>
+                    {!carregando && !erro && (
 
-                  <td className="text-center">
-                    {new Date(
-                      usuario.dataNascimento
-                    ).toLocaleDateString("pt-BR")}
-                  </td>
+                        <table className="usuarios-table">
 
-                  <td className="acoes">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
 
-                    <Link
-                      to={`/usuario/editar/${usuario.idUsuario}`}
-                      className="btn-editar"
-                      title="Editar"
-                    >
-                      <i className="fas fa-edit"></i>
-                    </Link>
+                            <tbody>
 
-                    <button
-                      type="button"
-                      className="btn-excluir"
-                      title="Excluir"
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
+                                {usuarios?.map((usuario) => (
 
-                  </td>
+                                    <tr key={usuario.idUsuario}>
 
-                </tr>
-              ))}
-            </tbody>
+                                        <td className="text-center">
+                                            {usuario.idUsuario}
+                                        </td>
 
-          </table>
+                                        <td>
+                                            {usuario.nome}
+                                        </td>
 
-        </div>
-      </section>
+                                        <td>
+                                            {usuario.cpf}
+                                        </td>
 
-    </main>
-  );
+                                        <td className="acoes">
+
+                                          <Link
+                                              to={`/usuario/editar/${usuario.idUsuario}`}
+                                              className="btn-editar"
+                                              title="Alterar"
+                                          >
+                                              <i className="fas fa-edit"></i>
+                                              Alterar
+                                          </Link>
+
+                                          <button
+                                              type="button"
+                                              className="btn-excluir"
+                                              title="Excluir"
+                                              onClick={() =>
+                                                  exUser(usuario.idUsuario)
+                                              }
+                                          >
+                                              <i className="fas fa-trash"></i>
+                                              Excluir
+                                          </button>
+
+                                      </td>
+
+                                    </tr>
+
+                                ))}
+
+                            </tbody>
+
+                        </table>
+
+                    )}
+
+                </div>
+
+            </section>
+
+        </main>
+    );
 }

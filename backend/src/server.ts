@@ -11,7 +11,6 @@ app.use("/api", userRoutes);
 
 app.get("/", (_req, res) => {
     res.json({
-        mensagem: "API Velox-Wrap funcionando!",
     });
 });
 
