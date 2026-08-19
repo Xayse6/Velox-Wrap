@@ -1,9 +1,11 @@
 import "../css/usuarioForm.css";
 
-import { Link, useNavigate } from "react-router-dom";
-import useUserForm  from "../hooks/useUserForm";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import useUserForm from "../hooks/useUserForm";
 
 export default function UsuarioForm() {
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     const {
         nome,
@@ -18,19 +20,23 @@ export default function UsuarioForm() {
 
         carregando,
         cadastrar,
+        editar,
+
         mensagem,
         tipoMensagem,
         limparMensagem,
-    } = useUserForm();
 
-    const navigate = useNavigate();
+        modoEdicao,
+    } = useUserForm(id);
 
     const handleSubmit = async (
         event: React.FormEvent<HTMLFormElement>
     ) => {
         event.preventDefault();
 
-        const sucesso = await cadastrar();
+        const sucesso = modoEdicao
+            ? await editar()
+            : await cadastrar();
 
         if (sucesso) {
             navigate("/usuarios");
@@ -42,10 +48,16 @@ export default function UsuarioForm() {
 
             <div className="usuarios-form-header">
 
-                <h1>Criar Conta</h1>
+                <h1>
+                    {modoEdicao
+                        ? "Editar Usuário"
+                        : "Criar Conta"}
+                </h1>
 
                 <p>
-                    Preencha os dados abaixo para se cadastrar na plataforma.
+                    {modoEdicao
+                        ? "Altere os dados do usuário."
+                        : "Preencha os dados abaixo para se cadastrar na plataforma."}
                 </p>
 
             </div>
@@ -83,7 +95,6 @@ export default function UsuarioForm() {
                     <form onSubmit={handleSubmit}>
 
                         <div>
-
                             <label htmlFor="nome">
                                 Nome Completo
                             </label>
@@ -99,13 +110,11 @@ export default function UsuarioForm() {
                                 }
                                 required
                             />
-
                         </div>
 
                         <div>
-
                             <label htmlFor="cpf">
-                                CPF Completo
+                                CPF
                             </label>
 
                             <input
@@ -122,7 +131,6 @@ export default function UsuarioForm() {
                                 }
                                 required
                             />
-
                         </div>
 
                         <div>
@@ -145,19 +153,25 @@ export default function UsuarioForm() {
 
                         <div>
                             <label htmlFor="senha">
-                                Senha
+                                {modoEdicao
+                                    ? "Nova Senha"
+                                    : "Senha"}
                             </label>
 
                             <input
                                 type="password"
                                 id="senha"
                                 name="senha"
-                                placeholder="Digite sua senha"
+                                placeholder={
+                                    modoEdicao
+                                        ? "Deixe vazio para manter a senha"
+                                        : "Digite sua senha"
+                                }
                                 value={senha}
                                 onChange={(event) =>
                                     setSenha(event.target.value)
                                 }
-                                required
+                                required={!modoEdicao}
                             />
                         </div>
 
@@ -166,8 +180,12 @@ export default function UsuarioForm() {
                             disabled={carregando}
                         >
                             {carregando
-                                ? "Cadastrando..."
-                                : "Cadastrar"}
+                                ? modoEdicao
+                                    ? "Salvando..."
+                                    : "Cadastrando..."
+                                : modoEdicao
+                                    ? "Salvar Alterações"
+                                    : "Cadastrar"}
                         </button>
 
                     </form>
@@ -175,18 +193,28 @@ export default function UsuarioForm() {
                 </div>
 
                 <div className="UserForm-footer">
-
                     <p>
-                        Já tem uma conta?{" "}
-
-                        <Link
-                            className="no-underline"
-                            to="/UserLogin"
-                        >
-                            Entre aqui
-                        </Link>
+                        {modoEdicao ? (
+                            <>
+                                <Link
+                                    className="no-underline"
+                                    to="/usuarios"
+                                >
+                                    Voltar para usuários
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                Possui uma conta?{" "}
+                                <Link
+                                    className="no-underline"
+                                    to="/login"
+                                >
+                                    Fazer Login
+                                </Link>
+                            </>
+                        )}
                     </p>
-
                 </div>
 
             </div>

@@ -2,16 +2,15 @@ import { Link } from "react-router-dom";
 
 import "../css/usuario.css";
 
-import  Users  from "../hooks/useUsers";
+import useUsers from "../hooks/useUsers";
 
-export default function Usuarios() {
-
+export default function Users() {
     const {
         usuarios,
         carregando,
         erro,
-        exUser,
-    } = Users();
+        deleteUser,
+    } = useUsers();
 
     return (
         <main className="usuarios-container">
@@ -66,47 +65,56 @@ export default function Usuarios() {
 
                                 {usuarios?.map((usuario) => (
 
-                                    <tr key={usuario.idUsuario}>
+                                    <tr key={usuario.idusuario}>
 
-                                        <td className="text-center">
-                                            {usuario.idUsuario}
-                                        </td>
+                                <td
+                                    className="text-center"
+                                    data-label="ID"
+                                >
+                                    {usuario.idusuario}
+                                </td>
 
-                                        <td>
-                                            {usuario.nome}
-                                        </td>
+                                <td data-label="Nome">
+                                    {usuario.nome}
+                                </td>
 
-                                        <td>
-                                            {usuario.cpf}
-                                        </td>
-                                        <td>
-                                            {usuario.email}
-                                        </td>
+                                <td data-label="CPF">
+                                    {usuario.cpf}
+                                </td>
 
-                                        <td className="acoes">
-                                          <Link
-                                              to={"/cadastro"}
-                                              className="btn-editar"
-                                              title="Alterar"
-                                          >
-                                              <i className="fas fa-edit"></i>
-                                              Alterar
-                                          </Link>
-                                          <button
-                                              type="button"
-                                              className="btn-excluir"
-                                              title="Excluir"
-                                              onClick={() =>
-                                                  exUser(usuario.idUsuario)
-                                              }
-                                          >
-                                              <i className="fas fa-trash"></i>
-                                              Excluir
-                                          </button>
+                                <td data-label="Email">
+                                    {usuario.email}
+                                </td>
 
-                                      </td>
+                                <td data-label="Ações">
 
-                                    </tr>
+                                    <div className="acoes">
+
+                                        <Link
+                                            to={`/usuario/edit/${usuario.idusuario}`}
+                                            className="btn-editar"
+                                        >
+                                            <i className="fas fa-edit"></i>
+                                            Alterar
+                                        </Link>
+
+                                        <button
+                                            type="button"
+                                            className="btn-excluir"
+                                            title="Excluir"
+                                            onClick={() =>
+                                                deleteUser(usuario.idusuario)
+                                            }
+                                        >
+                                            <i className="fas fa-trash"></i>
+                                            Excluir
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
 
                                 ))}
 

@@ -1,7 +1,17 @@
-.footer-page{
-    background: #050b12;
-    
-    color: #ffffff;
-    padding: 15px 20px;
+.footer-page {
+    width: 100%;
+
+    padding: 18px 24px;
+
+    flex-shrink: 0;
+
     text-align: center;
+
+    background: #0A101E;
+
+    color: #8C95AB;
+
+    font-size: 13px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }

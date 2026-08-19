@@ -1,39 +1,31 @@
 import { useEffect, useState } from "react";
 
-interface Usuario {
-    idUsuario: number;
-    nome: string;
-    cpf: string;
-    email: string;
-}
+import { getUsers, deleteUser } from "../services/usuarioService";
+import type { User } from "../types/user";
 
-export default function Users() {
-    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+export default function useUsers() {
+    const [usuarios, setUsuarios] = useState<User[]>([]);
     const [carregando, setCarregando] = useState(true);
     const [erro, setErro] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/usuarios")
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error("Erro ao buscar usuários");
-                }
+        async function loadUsers() {
+            try {
+                const data = await getUsers();
 
-                return res.json();
-            })
-            .then((data) => {
                 setUsuarios(data);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error(error);
                 setErro("Não foi possível carregar os usuários.");
-            })
-            .finally(() => {
+            } finally {
                 setCarregando(false);
-            });
+            }
+        }
+
+        loadUsers();
     }, []);
 
-    const exUser = async (idUsuario: number) => {
+    const deleteUserById = async (idUsuario: number) => {
         const confirmar = window.confirm(
             "Tem certeza que deseja excluir este usuário?"
         );
@@ -43,23 +35,13 @@ export default function Users() {
         }
 
         try {
-            const response = await fetch(
-                `http://localhost:3000/api/usuarios/${idUsuario}`,
-                {
-                    method: "DELETE",
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Erro ao excluir usuário");
-            }
+            await deleteUser(idUsuario);
 
             setUsuarios((usuariosAtuais) =>
                 usuariosAtuais.filter(
-                    (usuario) => usuario.idUsuario !== idUsuario
+                    (usuario) => usuario.idusuario !== idUsuario
                 )
             );
-
         } catch (error) {
             console.error(error);
             alert("Não foi possível excluir o usuário.");
@@ -70,6 +52,6 @@ export default function Users() {
         usuarios,
         carregando,
         erro,
-        exUser,
+        deleteUser: deleteUserById,
     };
 }

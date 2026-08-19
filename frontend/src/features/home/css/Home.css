@@ -1,30 +1,303 @@
-.home-page {
+.home-container {
     width: 100%;
+    flex: 1;
 
     display: flex;
     flex-direction: column;
 
-    padding: 50px;
-    box-sizing: border-box;
+    color: #E7EAF2;
 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.home-hero {
+    flex: 1;
+
+    min-height: 400px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 80px 24px;
+
+    text-align: center;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 900px;
+}
+
+.hero-content h1 {
+    margin: 0;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: clamp(4rem, 10vw, 7rem);
+
+    font-weight: 700;
+
+    letter-spacing: -0.04em;
+
+    color: #14A3A5;
+
+    text-shadow:
+        0 0 20px rgba(20, 163, 165, 0.45),
+        0 0 50px rgba(20, 163, 165, 0.25);
+}
+
+.hero-content p {
+    max-width: 600px;
+
+    margin: 20px auto 32px;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    color: #AEB7C8;
+}
+
+
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
+
+.hero-buttons {
+    display: flex;
+
+    justify-content: center;
     align-items: center;
 
+    gap: 14px;
+
+    flex-wrap: wrap;
 }
 
-.home-itens{
-    justify-content: space-between;
-    border: 1px solid red;
+.home-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 160px;
+
+    padding: 13px 24px;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease;
 }
 
-.home-txt h1{
+.home-btn:hover {
+    transform: translateY(-2px);
+}
+
+
+/* Principal */
+
+.home-btn-primary {
+    color: #FFFFFF;
+
+    background: #14A3A5;
+
+    border: 1px solid #14A3A5;
+
+    box-shadow:
+        0 6px 20px rgba(20, 163, 165, 0.20);
+}
+
+.home-btn-primary:hover {
+    background: #0E8385;
+
+    border-color: #0E8385;
+
+    box-shadow:
+        0 0 0 4px rgba(20, 163, 165, 0.14);
+}
+
+
+/* Outline */
+
+.home-btn-outline {
+    color: #5FD6D8;
+
+    background: rgba(20, 163, 165, 0.06);
+
+    border: 1px solid #14A3A5;
+}
+
+.home-btn-outline:hover {
+    color: #FFFFFF;
+
+    background: #14A3A5;
+}
+
+
+/* ==========================================================================
+   SERVIÇOS
+   ========================================================================== */
+
+.servicos {
+    width: 100%;
+
+    padding: 60px 24px 80px;
+}
+
+.servicos-grid {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 28px;
+}
+
+
+/* ==========================================================================
+   CARD
+   ========================================================================== */
+
+.servico-card {
+    padding: 42px 30px;
+
     text-align: center;
+
+    background: rgba(13, 21, 38, 0.94);
+
+    border: 1px solid rgba(20, 163, 165, 0.16);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.30);
+
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease;
 }
 
-.home-itens2{
-    justify-content: space-between;
-    border: 1px solid rgb(247, 0, 255);
+.servico-card:hover {
+    transform: translateY(-5px);
+
+    background: rgba(17, 28, 49, 0.96);
+
+    border-color: rgba(20, 163, 165, 0.40);
 }
 
-.home-txt2 h1{
-    text-align: center;
+
+/* Ícone */
+
+.servico-card i {
+    margin-bottom: 24px;
+
+    font-size: 48px;
+
+    color: #14A3A5;
+
+    text-shadow:
+        0 0 20px rgba(20, 163, 165, 0.25);
+}
+
+
+/* Título */
+
+.servico-card h3 {
+    margin: 0 0 12px;
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: 19px;
+
+    color: #E7EAF2;
+}
+
+
+/* Descrição */
+
+.servico-card p {
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #8C95AB;
+}
+
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .servicos-grid {
+        grid-template-columns: 1fr;
+
+        max-width: 550px;
+    }
+
+    .home-hero {
+        min-height: 550px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .home-container {
+        background-attachment: scroll;
+    }
+
+    .home-hero {
+        min-height: 500px;
+
+        padding: 60px 20px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(3.5rem, 17vw, 5rem);
+    }
+
+    .hero-content p {
+        font-size: 15px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .home-btn {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .servicos {
+        padding: 40px 16px 60px;
+    }
+
+    .servico-card {
+        padding: 32px 24px;
+    }
 }

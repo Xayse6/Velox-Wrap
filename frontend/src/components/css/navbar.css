@@ -1,74 +1,100 @@
-/* =========================
-   NAVBAR
-========================= */
+/* ==========================================================================
+   navbar.css — Velox Wrap (modo dark)
+   Mesma identidade de usuario.css: navy + teal + coral
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --nav-bg: #0D1526;
+  --nav-bg-scroll: #0A101E;
+  --nav-border: rgba(15, 139, 141, 0.18);
+
+  --nav-text: #E7EAF2;
+  --nav-text-muted: #8C95AB;
+
+  --nav-teal: #14A3A5;
+  --nav-teal-soft: rgba(20, 163, 165, 0.12);
+  --nav-coral: #D64550;
+  --nav-coral-dark: #B8323C;
+
+  --nav-font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --nav-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --nav-radius: 8px;
+  --nav-radius-pill: 999px;
+  --nav-transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Base                                                                    */
+/* ---------------------------------------------------------------------- */
 
 .navbar {
-  width: 100%;
-  background: #050b12;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-  padding: 15px 0;
-  position: relative;
-  z-index: 1000;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  backdrop-filter: blur(10px);
+
+  font-family: var(--nav-font-body);
 }
 
 .navbar-container {
-  width: 90%;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 14px 32px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
 }
 
-
-/* =========================
-   LOGO
-========================= */
+/* ---------------------------------------------------------------------- */
+/* Marca / logo                                                            */
+/* ---------------------------------------------------------------------- */
 
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .navbar-logo {
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 0 15px rgba(0, 212, 255, 0.3),
-    0 0 30px rgba(0, 212, 255, 0.15);
+  height: 34px;
+  width: auto;
+  display: block;
 }
 
 .navbar-title {
-  color: #00d4ff;
-  font-size: 28px;
+  font-family: var(--nav-font-display);
+  font-size: 19px;
   font-weight: 700;
-
-  text-shadow:
-    0 0 10px rgba(0, 212, 255, 0.8),
-    0 0 30px rgba(0, 212, 255, 0.5);
-
-  transition: 0.3s;
+  letter-spacing: -0.01em;
+  color: var(--nav-text);
+  position: relative;
 }
 
-.navbar-brand:hover .navbar-title {
-  text-shadow:
-    0 0 10px #00d4ff,
-    0 0 25px #00d4ff,
-    0 0 45px #00d4ff;
+.navbar-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--nav-teal), transparent);
+  opacity: 0.7;
 }
 
-
-/* =========================
-   MENU
-========================= */
+/* ---------------------------------------------------------------------- */
+/* Menu                                                                     */
+/* ---------------------------------------------------------------------- */
 
 .navbar-menu {
   display: flex;
@@ -76,205 +102,244 @@
 }
 
 .navbar-nav {
-  list-style: none;
-
   display: flex;
   align-items: center;
+  gap: 4px;
 
-  gap: 25px;
-
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-
-/* =========================
-   LINKS
-========================= */
-
 .nav-link {
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
 
-  color: #ffffff;
+  color: var(--nav-text-muted);
+  font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
 
-  font-size: 16px;
-  font-weight: 500;
-
-  padding: 8px 0;
-
-  transition: 0.3s;
-}
-
-.nav-link:hover {
-  color: #00d4ff;
-  text-shadow: 0 0 10px #00d4ff;
+  border-radius: var(--nav-radius);
+  position: relative;
+  transition: color var(--nav-transition), background var(--nav-transition);
 }
 
 .nav-link::after {
-  content: "";
-
+  content: '';
   position: absolute;
-  left: 0;
-  bottom: 0;
-
-  width: 0;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
   height: 2px;
+  background: var(--nav-teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--nav-transition);
+}
 
-  background: #00d4ff;
-
-  box-shadow: 0 0 8px #00d4ff;
-
-  transition: width 0.3s;
+.nav-link:hover {
+  color: var(--nav-text);
+  background: var(--nav-teal-soft);
 }
 
 .nav-link:hover::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
+.nav-link:focus-visible {
+  outline: 2px solid var(--nav-teal);
+  outline-offset: 2px;
+}
 
-/* =========================
-   BOTÕES
-========================= */
+/* Separador visual entre links de navegação e ações */
+.navbar-nav li:nth-child(3) {
+  margin-right: 12px;
+  padding-right: 12px;
+  position: relative;
+}
 
+.navbar-nav li:nth-child(3)::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 20px;
+  background: var(--nav-border);
+}
+
+/* Botões de seção (Usuários, Veículos, Modelos, Marcas, Cadastro) */
 .nav-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  margin: 0 1px;
 
-  color: #00d4ff;
+  color: var(--nav-text-muted);
+  font-size: 13.5px;
+  font-weight: 600;
   text-decoration: none;
 
-  border: 1px solid #00d4ff;
-  border-radius: 6px;
-
-  padding: 8px 15px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  transition: 0.3s;
+  border: 1px solid transparent;
+  border-radius: var(--nav-radius-pill);
+  transition: color var(--nav-transition), background var(--nav-transition), border-color var(--nav-transition);
 }
 
 .nav-button:hover {
-  color: #ffffff;
-  background: #00d4ff;
-
-  box-shadow:
-    0 0 10px rgba(0, 212, 255, 0.6),
-    0 0 25px rgba(0, 212, 255, 0.3);
+  color: var(--nav-teal);
+  background: var(--nav-teal-soft);
+  border-color: rgba(20, 163, 165, 0.35);
 }
 
+.nav-button:focus-visible {
+  outline: 2px solid var(--nav-teal);
+  outline-offset: 2px;
+}
 
-/* =========================
-   BOTÃO MOBILE
-========================= */
+/* Login em destaque, como uma ação primária (mesma linguagem do btn-novo) */
+.navbar-nav li:last-child .nav-button {
+  color: #FFFFFF;
+  background: var(--nav-teal);
+  border-color: var(--nav-teal);
+  margin-left: 8px;
+}
+
+.navbar-nav li:last-child .nav-button:hover {
+  background: #0E8385;
+  box-shadow: 0 0 0 3px rgba(20, 163, 165, 0.18);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Botão mobile (hambúrguer)                                               */
+/* ---------------------------------------------------------------------- */
 
 .navbar-toggle {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
 
-  width: 45px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
 
   background: transparent;
-
-  border: 1px solid #00d4ff;
-  border-radius: 6px;
-
+  border: 1px solid var(--nav-border);
+  border-radius: var(--nav-radius);
   cursor: pointer;
-
-  padding: 8px;
 }
 
 .navbar-toggle span {
   display: block;
-
-  width: 100%;
+  width: 18px;
   height: 2px;
-
-  margin: 5px 0;
-
-  background: #00d4ff;
-
-  box-shadow: 0 0 5px #00d4ff;
+  margin: 0 auto;
+  background: var(--nav-text);
+  border-radius: var(--nav-radius-pill);
+  transition: transform var(--nav-transition), opacity var(--nav-transition);
 }
 
-
-/* =========================
-   RESPONSIVIDADE
-========================= */
-
-@media (max-width: 1100px) {
-  .navbar-nav {
-    gap: 15px;
-  }
-
-  .nav-button {
-    padding: 7px 10px;
-  }
+.navbar-toggle:hover {
+  border-color: var(--nav-teal);
 }
 
+.navbar-toggle:focus-visible {
+  outline: 2px solid var(--nav-teal);
+  outline-offset: 2px;
+}
 
-@media (max-width: 850px) {
+/* Estado aberto: vira um X (requer classe "open" alternada via JS) */
+.navbar-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
 
+.navbar-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Responsivo                                                               */
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 960px) {
   .navbar-container {
-    flex-wrap: wrap;
+    padding: 12px 20px;
   }
 
   .navbar-toggle {
-    display: block;
+    display: flex;
   }
 
   .navbar-menu {
-    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
 
-    width: 100%;
-    margin-top: 20px;
+    max-height: 0;
+    overflow: hidden;
+
+    background: var(--nav-bg-scroll);
+    border-bottom: 1px solid var(--nav-border);
+
+    transition: max-height var(--nav-transition);
   }
 
-  .navbar-menu.active {
-    display: block;
+  .navbar-menu.open {
+    max-height: 600px;
   }
 
   .navbar-nav {
-    width: 100%;
-
     flex-direction: column;
     align-items: stretch;
-
-    gap: 10px;
+    gap: 2px;
+    padding: 12px 20px 20px;
   }
 
-  .nav-link {
-    display: block;
-    text-align: center;
-
-    padding: 12px;
-  }
-
+  .nav-link,
   .nav-button {
-    display: block;
-    text-align: center;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--nav-radius);
+  }
 
-    padding: 10px;
+  .nav-link::after {
+    display: none;
+  }
+
+  .navbar-nav li:nth-child(3) {
+    margin-right: 0;
+    padding-right: 0;
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+  }
+
+  .navbar-nav li:nth-child(3)::after {
+    right: auto;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    transform: none;
+  }
+
+  .navbar-nav li:last-child .nav-button {
+    margin-left: 0;
+    justify-content: center;
+    margin-top: 6px;
   }
 }
 
-
-@media (max-width: 500px) {
-
-  .navbar {
-    padding: 10px 0;
-  }
-
-  .navbar-container {
-    width: 94%;
-  }
-
-  .navbar-logo {
-    width: 45px;
-    height: 45px;
-  }
-
-  .navbar-title {
-    font-size: 22px;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }

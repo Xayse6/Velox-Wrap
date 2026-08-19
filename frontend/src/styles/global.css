@@ -1,14 +1,27 @@
 html,
-body,
-#root {
+body {
     min-height: 100%;
     margin: 0;
+}
 
+html {
     min-height: 100vh;
     background-color: black;
-    background-image: url("../assets/principal.jpg");
+}
+
+body {
+    min-height: 100vh;
+
+    background-color: black;
+
+       background:
+        linear-gradient(
+            rgba(10, 16, 30, 0.72),
+            rgba(10, 16, 30, 0.72)
+        ),
+        url("../assets/principal.jpg");
     background-size: cover;
-    background-position: center;  
+    background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
 
@@ -17,9 +30,9 @@ body,
 }
 
 * {
+    box-sizing: border-box;
     font-family: inherit;
 }
-
 
 #root {
     min-height: 100vh;
@@ -32,24 +45,8 @@ body,
 .main-content {
     flex: 1;
 
-    /* background-color: rgba(73, 240, 8, 0.15); */
-
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 
-    border-top: 1px solid #d0d0d0;
-    border-bottom: 1px solid #d0d0d0;
+    width: 100%;
 }
-
-/* .navbar-no-underline:hover {
-    background-color: rgba(151, 143, 143, 0.2);
-    border-color: rgba(107, 101, 101, 0.4);
-
-    color: black;
-
-    transform: translateY(-1px);
-}
-
-.navbar-no-underline:active {
-    transform: translateY(0);
-} */
