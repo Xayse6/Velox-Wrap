@@ -14,10 +14,10 @@ import Marcas from "./features/marca/pages/Marcas";
 import CadastroMarcas from "./features/marca/pages/CadastroMarcas";
 
 import Modelos from "./features/modelo/pages/Modelos";
-// import CadastroModelos from "./features/modelo/pages/CadastroModelos";
+import CadastroModelos from "./features/modelo/pages/CadastroModelos";
 
 import Veiculos from "./features/veiculo/pages/Veiculos";
-// import CadastroModelos from "./features/modelo/pages/CadastroModelos";
+import CadastroVeiculos from "./features/veiculo/pages/CadastroVeiculos"
 
 
 import Login from "./features/auth/pages/Login";
@@ -45,10 +45,12 @@ export default function App() {
                     <Route path="/marca/edit/:id" element={<CadastroMarcas />}/>
 
                     <Route path="/modelos" element={<Modelos />}/>
-                    {/* <Route path="/cadastroMarcas" element={<CadastroMarcas />}/>
-                    <Route path="/marca/edit/:id" element={<CadastroMarcas />}/> */}
+                    <Route path="/cadastroModelos" element={<CadastroModelos />}/>
+                    <Route path="/modelo/edit/:id" element={<CadastroModelos />}/>
 
                     <Route path="/veiculos" element={<Veiculos />}/>
+                    <Route path="/cadastroVeiculos" element={<CadastroVeiculos />}/>
+                    <Route path="/veiculo/edit/:id" element={<CadastroVeiculos />}/>
 
                 </Routes>
             </main>

@@ -1,32 +1,39 @@
-import "../css/marca.css";
+import "../css/modeloCadastro.css";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
-import useMarcaForm from "../hooks/userMarcasForm";
+import {
+    Link,
+    useNavigate,
+    useParams,
+} from "react-router-dom";
 
-export default function MarcaForm() {
+import type { FormEvent } from "react";
+
+import useModeloForm from "../hooks/userModelosForm";
+
+export default function CadastroModelos() {
     const { id } = useParams();
+
     const navigate = useNavigate();
 
     const {
-        nome_marca,
-        sigla_marca,
-
-        setNome_marca,
-        setSigla_marca,
-
+        nomeModelo,
+        anoModelo,
+        idMarca,
+        setNomeModelo,
+        setAnoModelo,
+        setIdMarca,
+        marcas,
         carregando,
         cadastrar,
         editar,
-
         mensagem,
         tipoMensagem,
         limparMensagem,
-
         modoEdicao,
-    } = useMarcaForm(id);
+    } = useModeloForm(id);
 
     const handleSubmit = async (
-        event: React.FormEvent<HTMLFormElement>
+        event: FormEvent<HTMLFormElement>
     ) => {
         event.preventDefault();
 
@@ -35,41 +42,42 @@ export default function MarcaForm() {
             : await cadastrar();
 
         if (sucesso) {
-            navigate("/marcas");
+            navigate("/modelos");
         }
     };
 
     return (
-        <main className="usuarios-form-container">
+        <main className="modelo-form-container">
 
-            <div className="usuarios-form-header">
+            <div className="modelo-form-header">
 
                 <h1>
                     {modoEdicao
-                        ? "Editar Marca"
-                        : "Cadastrar Marca"}
+                        ? "Editar Modelo"
+                        : "Cadastrar Modelo"}
                 </h1>
 
                 <p>
                     {modoEdicao
-                        ? "Altere os dados da marca."
-                        : "Preencha os dados abaixo para cadastrar uma nova marca."}
+                        ? "Altere os dados do modelo."
+                        : "Preencha os dados para cadastrar um novo modelo."}
                 </p>
 
             </div>
 
-            <div className="usuario-form-table">
+            <div className="modelo-form-card">
 
                 {mensagem && (
-                    <div className={`mensagem ${tipoMensagem}`}>
-
+                    <div
+                        className={`modelo-mensagem ${tipoMensagem}`}
+                    >
                         <i
                             className={
                                 tipoMensagem === "sucesso"
                                     ? "fas fa-check-circle"
                                     : "fas fa-exclamation-circle"
                             }
-                        ></i>
+                        />
 
                         <span>
                             {mensagem}
@@ -80,58 +88,104 @@ export default function MarcaForm() {
                             onClick={limparMensagem}
                             aria-label="Fechar mensagem"
                         >
-                            <i className="fas fa-times"></i>
+                            <i className="fas fa-times" />
                         </button>
-
                     </div>
                 )}
 
-                <div className="UserForm-form">
+                <div className="modelo-form">
 
                     <form onSubmit={handleSubmit}>
 
-                        {/* Nome da Marca */}
+                        {/* Nome do Modelo */}
 
-                        <div>
-                            <label htmlFor="nome_marca">
-                                Nome da Marca
+                        <div className="modelo-form-group">
+
+                            <label htmlFor="nomeModelo">
+                                Nome do Modelo
                             </label>
 
                             <input
                                 type="text"
-                                id="nome_marca"
-                                name="nome_marca"
-                                placeholder="Digite o nome da marca"
-                                value={nome_marca}
+                                id="nomeModelo"
+                                value={nomeModelo}
                                 onChange={(event) =>
-                                    setNome_marca(event.target.value)
+                                    setNomeModelo(
+                                        event.target.value
+                                    )
                                 }
+                                placeholder="Digite o nome do modelo"
                                 maxLength={100}
                                 required
                             />
+
                         </div>
 
-                        {/* Sigla */}
+                        {/* Ano e Marca */}
 
-                        <div>
-                            <label htmlFor="sigla_marca">
-                                Sigla da Marca
-                            </label>
+                        <div className="modelo-form-row">
 
-                            <input
-                                type="text"
-                                id="sigla_marca"
-                                name="sigla_marca"
-                                placeholder="Digite a sigla da marca"
-                                value={sigla_marca}
-                                onChange={(event) =>
-                                    setSigla_marca(
-                                        event.target.value.toUpperCase()
-                                    )
-                                }
-                                maxLength={5}
-                                required
-                            />
+                            <div className="modelo-form-group">
+
+                                <label htmlFor="anoModelo">
+                                    Ano do Modelo
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="anoModelo"
+                                    value={anoModelo}
+                                    onChange={(event) =>
+                                        setAnoModelo(
+                                            event.target.value
+                                        )
+                                    }
+                                    placeholder="Ex: 2025"
+                                    min="1900"
+                                    max="2100"
+                                    required
+                                />
+
+                            </div>
+
+                            <div className="modelo-form-group">
+
+                                <label htmlFor="marca">
+                                    Marca
+                                </label>
+
+                                <select
+                                    id="marca"
+                                    value={idMarca}
+                                    onChange={(event) =>
+                                        setIdMarca(
+                                            event.target.value
+                                        )
+                                    }
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione uma marca
+                                    </option>
+
+                                    {marcas.map((marca) => (
+
+                                        <option
+                                            key={marca.id_Marca}
+                                            value={marca.id_Marca}
+                                        >
+                                            {marca.nome_Marca} (
+                                            {marca.sigla_Marca}
+                                            )
+                                        </option>
+
+                                    ))}
+
+                                </select>
+
+                            </div>
+
                         </div>
 
                         {/* Botão */}
@@ -146,7 +200,7 @@ export default function MarcaForm() {
                                     : "Cadastrando..."
                                 : modoEdicao
                                     ? "Salvar Alterações"
-                                    : "Cadastrar Marca"}
+                                    : "Cadastrar Modelo"}
                         </button>
 
                     </form>
@@ -155,14 +209,11 @@ export default function MarcaForm() {
 
                 {/* Rodapé */}
 
-                <div className="UserForm-footer">
+                <div className="modelo-form-footer">
 
                     <p>
-                        <Link
-                            className="no-underline"
-                            to="/marcas"
-                        >
-                            Voltar para marcas
+                        <Link to="/modelos">
+                            Voltar para modelos
                         </Link>
                     </p>
 

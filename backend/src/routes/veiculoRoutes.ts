@@ -3,117 +3,343 @@ import { pool } from "../config/database";
 
 const router = Router();
 
-/* ============================================================
-   LISTAR VEÍCULOS
-   ============================================================ */
+
+// ============================================================
+// LISTAR VEÍCULOS
+// ============================================================
 
 router.get("/veiculos", async (_req, res) => {
+
     try {
+
         const resultado = await pool.query(`
+
             SELECT
-                v.id_Veiculo,
-                v.idUsuario,
-                v.id_Modelo,
 
-                u.nome AS nome_Usuario,
+                v.id_veiculo AS "id_Veiculo",
 
-                mo.nome_Modelo,
-                mo.ano_Modelo,
+                v.id_usuario AS "id_Usuario",
 
-                ma.id_Marca,
-                ma.nome_Marca,
-                ma.sigla_Marca
+                v.id_modelo AS "id_Modelo",
+
+                u.nome_usuario AS "nome_Usuario",
+
+                mo.nome_modelo AS "nome_Modelo",
+
+                mo.ano_modelo AS "ano_Modelo",
+
+                ma.id_marca AS "id_Marca",
+
+                ma.nome_marca AS "nome_Marca",
+
+                ma.sigla_marca AS "sigla_Marca"
+
 
             FROM veiculos v
 
             INNER JOIN usuarios u
-                ON v.idUsuario = u.idUsuario
+                ON v.id_usuario = u.id_usuario
 
             INNER JOIN modelos mo
-                ON v.id_Modelo = mo.id_Modelo
+                ON v.id_modelo = mo.id_modelo
 
             INNER JOIN marcas ma
-                ON mo.id_Marca = ma.id_Marca
+                ON mo.id_marca = ma.id_marca
 
-            ORDER BY v.id_Veiculo
+
+            ORDER BY v.id_veiculo;
+
         `);
+
 
         return res.status(200).json(resultado.rows);
 
+
     } catch (error) {
 
-        console.error("Erro ao buscar veículos:", error);
+        console.error("ERRO AO BUSCAR VEÍCULOS");
+        console.error(error);
 
         return res.status(500).json({
-            mensagem: "Erro ao buscar veículos",
-            erro: error instanceof Error
-                ? error.message
-                : String(error),
+            mensagem: "Erro ao buscar veículos"
         });
+
     }
+
 });
 
 
-/* ============================================================
-   BUSCAR VEÍCULO POR ID
-   ============================================================ */
+
+// ============================================================
+// BUSCAR POR ID
+// ============================================================
 
 router.get("/veiculos/:id", async (req, res) => {
+
     try {
 
-        const { id } = req.params;
+        const id = Number(req.params.id);
 
-        const resultado = await pool.query(
-            `
+
+        const resultado = await pool.query(`
+
             SELECT
-                v.id_Veiculo,
-                v.idUsuario,
-                v.id_Modelo,
 
-                u.nome AS nome_Usuario,
+                v.id_veiculo AS "id_Veiculo",
 
-                mo.nome_Modelo,
-                mo.ano_Modelo,
+                v.id_usuario AS "id_Usuario",
 
-                ma.id_Marca,
-                ma.nome_Marca,
-                ma.sigla_Marca
+                v.id_modelo AS "id_Modelo",
+
+                u.nome_usuario AS "nome_Usuario",
+
+                mo.nome_modelo AS "nome_Modelo",
+
+                mo.ano_modelo AS "ano_Modelo",
+
+                ma.id_marca AS "id_Marca",
+
+                ma.nome_marca AS "nome_Marca",
+
+                ma.sigla_marca AS "sigla_Marca"
+
 
             FROM veiculos v
 
             INNER JOIN usuarios u
-                ON v.idUsuario = u.idUsuario
+                ON v.id_usuario = u.id_usuario
 
             INNER JOIN modelos mo
-                ON v.id_Modelo = mo.id_Modelo
+                ON v.id_modelo = mo.id_modelo
 
             INNER JOIN marcas ma
-                ON mo.id_Marca = ma.id_Marca
+                ON mo.id_marca = ma.id_marca
 
-            WHERE v.id_Veiculo = $1
-            `,
-            [id]
-        );
 
-        if (resultado.rowCount === 0) {
+            WHERE v.id_veiculo = $1;
+
+        `,[id]);
+
+
+        if(resultado.rows.length === 0){
+
             return res.status(404).json({
-                mensagem: "Veículo não encontrado"
+                mensagem:"Veículo não encontrado"
             });
+
         }
 
-        return res.status(200).json(resultado.rows[0]);
 
-    } catch (error) {
+        return res.json(resultado.rows[0]);
 
-        console.error("Erro ao buscar veículo:", error);
+
+    } catch(error){
+
+        console.error(error);
 
         return res.status(500).json({
-            mensagem: "Erro ao buscar veículo",
-            erro: error instanceof Error
-                ? error.message
-                : String(error),
+            mensagem:"Erro ao buscar veículo"
         });
+
     }
+
 });
+
+
+
+// ============================================================
+// CADASTRAR
+// ============================================================
+
+router.post("/veiculos", async (req,res)=>{
+
+    try{
+
+        const {
+            id_Usuario,
+            id_Modelo
+        } = req.body;
+
+
+        const resultado = await pool.query(`
+
+            INSERT INTO veiculos
+            (
+                id_usuario,
+                id_modelo
+            )
+
+            VALUES
+            ($1,$2)
+
+
+            RETURNING
+
+            id_veiculo AS "id_Veiculo",
+            id_usuario AS "id_Usuario",
+            id_modelo AS "id_Modelo";
+
+        `,
+        [
+            id_Usuario,
+            id_Modelo
+        ]);
+
+
+
+        return res.status(201).json(resultado.rows[0]);
+
+
+
+    }catch(error){
+
+        console.error(error);
+
+        return res.status(500).json({
+            mensagem:"Erro ao cadastrar veículo"
+        });
+
+    }
+
+});
+
+
+
+// ============================================================
+// EDITAR
+// ============================================================
+
+router.put("/veiculos/:id", async(req,res)=>{
+
+
+    try{
+
+
+        const id = Number(req.params.id);
+
+
+        const {
+            id_Usuario,
+            id_Modelo
+        } = req.body;
+
+
+
+        const resultado = await pool.query(`
+
+
+            UPDATE veiculos
+
+            SET
+
+            id_usuario=$1,
+            id_modelo=$2
+
+
+            WHERE id_veiculo=$3
+
+
+            RETURNING
+
+            id_veiculo AS "id_Veiculo",
+            id_usuario AS "id_Usuario",
+            id_modelo AS "id_Modelo";
+
+
+        `,
+        [
+            id_Usuario,
+            id_Modelo,
+            id
+        ]);
+
+
+
+        return res.json(resultado.rows[0]);
+
+
+
+    }catch(error){
+
+
+        console.error(error);
+
+
+        return res.status(500).json({
+            mensagem:"Erro ao atualizar veículo"
+        });
+
+
+    }
+
+
+});
+
+
+
+// ============================================================
+// EXCLUIR
+// ============================================================
+
+router.delete("/veiculos/:id", async(req,res)=>{
+
+
+    try{
+
+
+        const id = Number(req.params.id);
+
+
+        const resultado = await pool.query(`
+
+            DELETE FROM veiculos
+
+            WHERE id_veiculo=$1
+
+            RETURNING id_veiculo;
+
+
+        `,
+        [id]);
+
+
+
+        if(resultado.rows.length===0){
+
+            return res.status(404).json({
+                mensagem:"Veículo não encontrado"
+            });
+
+        }
+
+
+
+        return res.json({
+
+            mensagem:"Veículo excluído com sucesso"
+
+        });
+
+
+
+    }catch(error){
+
+
+        console.error(error);
+
+
+        return res.status(500).json({
+
+            mensagem:"Erro ao excluir veículo"
+
+        });
+
+
+    }
+
+
+});
+
+
 
 export default router;

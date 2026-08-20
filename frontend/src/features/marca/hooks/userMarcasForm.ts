@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 
-import { inserirMarca } from "../services/inserirMarca";
-import { buscarMarca } from "../services/buscarMarca";
-import { editarMarca } from "../services/editarMarca";
+import {
+    buscarMarca,
+    editarMarca,
+    inserirMarca,
+} from "../services/marcaService";
 
 export default function useMarcaForm(id?: string) {
+    const [nome_Marca, setNome_Marca] = useState("");
 
-    const [nome_marca, setNome_marca] = useState("");
-    const [sigla_marca, setSigla_marca] = useState("");
+    const [sigla_Marca, setSigla_Marca] = useState("");
 
     const [carregando, setCarregando] = useState(false);
 
     const [mensagem, setMensagem] = useState("");
+
     const [tipoMensagem, setTipoMensagem] =
         useState<"sucesso" | "erro" | "">("");
 
@@ -22,28 +25,21 @@ export default function useMarcaForm(id?: string) {
         setTipoMensagem("");
     };
 
-    // ==========================================================
-    // CARREGAR MARCA PARA EDIÇÃO
-    // ==========================================================
-
     useEffect(() => {
-
         if (!id) return;
 
         const carregarMarca = async () => {
-
             try {
-
                 setCarregando(true);
+
                 limparMensagem();
 
                 const marca = await buscarMarca(id);
 
-                setNome_marca(marca.nome_marca);
-                setSigla_marca(marca.sigla_marca);
+                setNome_Marca(marca.nome_Marca);
 
+                setSigla_Marca(marca.sigla_Marca);
             } catch (error) {
-
                 console.error(error);
 
                 setMensagem(
@@ -51,32 +47,23 @@ export default function useMarcaForm(id?: string) {
                 );
 
                 setTipoMensagem("erro");
-
             } finally {
-
                 setCarregando(false);
-
             }
         };
 
         carregarMarca();
-
     }, [id]);
 
-    // ==========================================================
-    // CADASTRAR
-    // ==========================================================
-
     const cadastrar = async (): Promise<boolean> => {
-
         try {
-
             setCarregando(true);
+
             limparMensagem();
 
             await inserirMarca({
-                nome_marca,
-                sigla_marca,
+                nome_Marca,
+                sigla_Marca,
             });
 
             setMensagem(
@@ -85,13 +72,12 @@ export default function useMarcaForm(id?: string) {
 
             setTipoMensagem("sucesso");
 
-            setNome_marca("");
-            setSigla_marca("");
+            setNome_Marca("");
+
+            setSigla_Marca("");
 
             return true;
-
         } catch (error) {
-
             console.error(error);
 
             setMensagem(
@@ -101,32 +87,24 @@ export default function useMarcaForm(id?: string) {
             setTipoMensagem("erro");
 
             return false;
-
         } finally {
-
             setCarregando(false);
-
         }
     };
 
-    // ==========================================================
-    // EDITAR
-    // ==========================================================
-
     const editar = async (): Promise<boolean> => {
-
         if (!id) {
             return false;
         }
 
         try {
-
             setCarregando(true);
+
             limparMensagem();
 
             await editarMarca(id, {
-                nome_marca,
-                sigla_marca,
+                nome_Marca,
+                sigla_Marca,
             });
 
             setMensagem(
@@ -136,9 +114,7 @@ export default function useMarcaForm(id?: string) {
             setTipoMensagem("sucesso");
 
             return true;
-
         } catch (error) {
-
             console.error(error);
 
             setMensagem(
@@ -148,20 +124,17 @@ export default function useMarcaForm(id?: string) {
             setTipoMensagem("erro");
 
             return false;
-
         } finally {
-
             setCarregando(false);
-
         }
     };
 
     return {
-        nome_marca,
-        setNome_marca,
+        nome_Marca,
+        setNome_Marca,
 
-        sigla_marca,
-        setSigla_marca,
+        sigla_Marca,
+        setSigla_Marca,
 
         carregando,
 
@@ -172,6 +145,7 @@ export default function useMarcaForm(id?: string) {
 
         mensagem,
         tipoMensagem,
+
         limparMensagem,
     };
 }

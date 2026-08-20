@@ -15,6 +15,7 @@ export default function Users() {
     return (
         <main className="usuarios-container">
 
+            {/* HEADER */}
             <section className="usuarios-header">
 
                 <div>
@@ -35,20 +36,24 @@ export default function Users() {
 
             </section>
 
+            {/* TABELA */}
             <section className="usuarios-card">
 
                 <div className="table-container">
 
                     {carregando && (
-                        <p>Carregando usuários...</p>
+                        <p>
+                            Carregando usuários...
+                        </p>
                     )}
 
                     {erro && (
-                        <p>{erro}</p>
+                        <p>
+                            {erro}
+                        </p>
                     )}
 
                     {!carregando && !erro && (
-
                         <table className="usuarios-table">
 
                             <thead>
@@ -63,65 +68,75 @@ export default function Users() {
 
                             <tbody>
 
-                                {usuarios?.map((usuario) => (
+                                {usuarios.map((usuario) => (
 
-                                    <tr key={usuario.idusuario}>
+                                    <tr
+                                        key={usuario.id_Usuario}
+                                    >
 
-                                <td
-                                    className="text-center"
-                                    data-label="ID"
-                                >
-                                    {usuario.idusuario}
-                                </td>
-
-                                <td data-label="Nome">
-                                    {usuario.nome}
-                                </td>
-
-                                <td data-label="CPF">
-                                    {usuario.cpf}
-                                </td>
-
-                                <td data-label="Email">
-                                    {usuario.email}
-                                </td>
-
-                                <td data-label="Ações">
-
-                                    <div className="acoes">
-
-                                        <Link
-                                            to={`/usuario/edit/${usuario.idusuario}`}
-                                            className="btn-editar"
+                                        {/* ID */}
+                                        <td
+                                            className="text-center"
+                                            data-label="ID"
                                         >
-                                            <i className="fas fa-edit"></i>
-                                            Alterar
-                                        </Link>
+                                            {usuario.id_Usuario}
+                                        </td>
 
-                                        <button
-                                            type="button"
-                                            className="btn-excluir"
-                                            title="Excluir"
-                                            onClick={() =>
-                                                deleteUser(usuario.idusuario)
-                                            }
-                                        >
-                                            <i className="fas fa-trash"></i>
-                                            Excluir
-                                        </button>
+                                        {/* NOME */}
+                                        <td data-label="Nome">
+                                            {usuario.nome_Usuario}
+                                        </td>
 
-                                    </div>
+                                        {/* CPF */}
+                                        <td data-label="CPF">
+                                            {usuario.cpf_Usuario}
+                                        </td>
 
-                                </td>
+                                        {/* EMAIL */}
+                                        <td data-label="Email">
+                                            {usuario.email_Usuario}
+                                        </td>
 
-                            </tr>
+                                        {/* AÇÕES */}
+                                        <td data-label="Ações">
+
+                                            <div className="acoes">
+
+                                                {/* EDITAR */}
+                                                <Link
+                                                    to={`/usuario/edit/${usuario.id_Usuario}`}
+                                                    className="btn-editar"
+                                                >
+                                                    <i className="fas fa-edit"></i>
+                                                    Alterar
+                                                </Link>
+
+                                                {/* EXCLUIR */}
+                                                <button
+                                                    type="button"
+                                                    className="btn-excluir"
+                                                    title="Excluir"
+                                                    onClick={() =>
+                                                        deleteUser(
+                                                            usuario.id_Usuario
+                                                        )
+                                                    }
+                                                >
+                                                    <i className="fas fa-trash"></i>
+                                                    Excluir
+                                                </button>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
 
                                 ))}
 
                             </tbody>
 
                         </table>
-
                     )}
 
                 </div>

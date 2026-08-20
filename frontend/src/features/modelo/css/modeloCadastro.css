@@ -1,0 +1,665 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+/* ==========================================================================
+   Variáveis
+   ========================================================================== */
+
+:root {
+    --color-bg: #0A101E;
+    --color-surface: #0D1526;
+    --color-surface-light: #111C31;
+    --color-surface-hover: #13243A;
+
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-strong: rgba(255, 255, 255, 0.14);
+
+    --color-text-primary: #E7EAF2;
+    --color-text-secondary: #9AA4B8;
+    --color-text-muted: #69758B;
+
+    --color-navy: #16213E;
+
+    --color-teal: #14A3A5;
+    --color-teal-dark: #0E8385;
+    --color-teal-soft: rgba(20, 163, 165, 0.12);
+
+    --color-coral: #D64550;
+    --color-coral-dark: #B8323C;
+    --color-coral-soft: rgba(214, 69, 80, 0.12);
+
+    --color-success: #14A3A5;
+    --color-success-soft: rgba(20, 163, 165, 0.12);
+
+    --color-error: #D64550;
+    --color-error-soft: rgba(214, 69, 80, 0.12);
+
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+
+    --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* ==========================================================================
+   Container principal
+   ========================================================================== */
+
+.modelo-form-container {
+    width: 100%;
+    min-height: 100%;
+    flex: 1;
+
+    padding: 40px 48px 64px;
+
+    background:
+        linear-gradient(
+            rgba(10, 16, 30, 0.68),
+            rgba(10, 16, 30, 0.68)
+        ),
+        url("../assets/principal.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   Cabeçalho
+   ========================================================================== */
+
+.modelo-form-header {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto 28px;
+
+    padding: 20px 24px;
+
+    background: rgba(13, 21, 38, 0.94);
+
+    border: 1px solid rgba(20, 163, 165, 0.18);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.modelo-form-header h1 {
+    margin: 0 0 8px;
+
+    font-family: var(--font-display);
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.01em;
+
+    color: var(--color-text-primary);
+}
+
+.modelo-form-header h1::after {
+    content: '';
+
+    display: block;
+
+    width: 36px;
+    height: 4px;
+
+    margin-top: 10px;
+
+    border-radius: var(--radius-pill);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--color-teal),
+            transparent
+        );
+}
+
+.modelo-form-header p {
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Card do formulário
+   ========================================================================== */
+
+.modelo-form-card {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 32px;
+
+    background: rgba(13, 21, 38, 0.96);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* ==========================================================================
+   Mensagens
+   ========================================================================== */
+
+.modelo-mensagem {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 24px;
+
+    padding: 13px 15px;
+
+    border-radius: var(--radius-md);
+
+    font-size: 14px;
+    font-weight: 500;
+
+    border: 1px solid transparent;
+}
+
+.modelo-mensagem i:first-child {
+    flex-shrink: 0;
+
+    font-size: 15px;
+}
+
+.modelo-mensagem span {
+    flex: 1;
+}
+
+.modelo-mensagem button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.modelo-mensagem button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Mensagem de sucesso */
+
+.modelo-mensagem.sucesso {
+    background: var(--color-success-soft);
+
+    border-color: rgba(20, 163, 165, 0.25);
+
+    color: #5FD6D8;
+}
+
+/* Mensagem de erro */
+
+.modelo-mensagem.erro {
+    background: var(--color-error-soft);
+
+    border-color: rgba(214, 69, 80, 0.25);
+
+    color: #FF8A92;
+}
+
+/* ==========================================================================
+   Formulário
+   ========================================================================== */
+
+.modelo-form {
+    width: 100%;
+}
+
+.modelo-form form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+}
+
+/* ==========================================================================
+   Grupo de campo
+   ========================================================================== */
+
+.modelo-form-group {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.modelo-form-group label {
+    font-family: var(--font-display);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+
+    color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Inputs
+   ========================================================================== */
+
+.modelo-form-group input,
+.modelo-form-group select {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 12px 14px;
+
+    color: var(--color-text-primary);
+
+    background: var(--color-surface-light);
+
+    border: 1px solid var(--color-border-strong);
+
+    border-radius: var(--radius-md);
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.modelo-form-group input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.modelo-form-group input:hover,
+.modelo-form-group select:hover {
+    background: var(--color-surface-hover);
+
+    border-color: rgba(20, 163, 165, 0.28);
+}
+
+.modelo-form-group input:focus,
+.modelo-form-group select:focus {
+    background: var(--color-surface-hover);
+
+    border-color: var(--color-teal);
+
+    box-shadow:
+        0 0 0 3px rgba(20, 163, 165, 0.12);
+}
+
+/* ==========================================================================
+   Select de marcas
+   ========================================================================== */
+
+.modelo-form-group select {
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    cursor: pointer;
+
+    padding-right: 42px;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            var(--color-text-secondary) 50%
+        ),
+        linear-gradient(
+            135deg,
+            var(--color-text-secondary) 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 18px) 21px,
+        calc(100% - 13px) 21px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+}
+
+.modelo-form-group select option {
+    background: var(--color-surface-light);
+
+    color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   Ano
+   ========================================================================== */
+
+.modelo-form-group input[type="number"] {
+    font-family: var(--font-mono);
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+/* Remove setas do input number */
+
+.modelo-form-group input[type="number"]::-webkit-inner-spin-button,
+.modelo-form-group input[type="number"]::-webkit-outer-spin-button {
+    opacity: 0.6;
+}
+
+/* ==========================================================================
+   Linha de campos
+   ========================================================================== */
+
+.modelo-form-row {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+/* ==========================================================================
+   Botão principal
+   ========================================================================== */
+
+.modelo-form button[type="submit"] {
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 6px;
+
+    padding: 12px 20px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: #FFFFFF;
+
+    background: var(--color-teal);
+
+    border: none;
+
+    border-radius: var(--radius-pill);
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(20, 163, 165, 0.18);
+
+    transition:
+        transform var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.modelo-form button[type="submit"]:hover:not(:disabled) {
+    background: var(--color-teal-dark);
+
+    box-shadow:
+        0 0 0 4px rgba(20, 163, 165, 0.16);
+
+    transform: translateY(-1px);
+}
+
+.modelo-form button[type="submit"]:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.modelo-form button[type="submit"]:focus-visible {
+    outline: 2px solid var(--color-teal);
+
+    outline-offset: 3px;
+}
+
+.modelo-form button[type="submit"]:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+
+.modelo-form-footer {
+    width: 100%;
+
+    margin-top: 24px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid var(--color-border);
+
+    text-align: center;
+}
+
+.modelo-form-footer p {
+    margin: 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.modelo-form-footer a {
+    color: #5FD6D8;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        color var(--transition);
+}
+
+.modelo-form-footer a:hover {
+    color: #FFFFFF;
+
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Campo obrigatório
+   ========================================================================== */
+
+.modelo-required {
+    color: #FF8A92;
+
+    margin-left: 3px;
+}
+
+/* ==========================================================================
+   Mensagem de carregamento
+   ========================================================================== */
+
+.modelo-loading {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Responsivo
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .modelo-form-container {
+        padding: 28px 20px 40px;
+    }
+
+    .modelo-form-header {
+        margin-bottom: 20px;
+    }
+
+    .modelo-form-card {
+        padding: 26px;
+    }
+}
+
+/* ==========================================================================
+   Tablet
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+    .modelo-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .modelo-form-header h1 {
+        font-size: 26px;
+    }
+
+    .modelo-form-card {
+        padding: 22px;
+    }
+}
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    .modelo-form-container {
+        padding: 20px 14px 32px;
+    }
+
+    .modelo-form-header {
+        padding: 20px;
+    }
+
+    .modelo-form-header h1 {
+        font-size: 24px;
+    }
+
+    .modelo-form-header p {
+        font-size: 13px;
+    }
+
+    .modelo-form-card {
+        padding: 18px;
+
+        border-radius: 14px;
+    }
+
+    .modelo-form-group input,
+    .modelo-form-group select {
+        min-height: 46px;
+
+        font-size: 14px;
+    }
+
+    .modelo-form button[type="submit"] {
+        min-height: 46px;
+    }
+
+    .modelo-mensagem {
+        align-items: flex-start;
+
+        font-size: 13px;
+    }
+}
+
+/* ==========================================================================
+   Movimento reduzido
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+        transition: none !important;
+    }
+}

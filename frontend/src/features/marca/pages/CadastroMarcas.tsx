@@ -1,32 +1,36 @@
 import "../css/marca.css";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+    Link,
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
+import type { FormEvent } from "react";
+
 import useMarcaForm from "../hooks/userMarcasForm";
 
 export default function MarcaForm() {
     const { id } = useParams();
+
     const navigate = useNavigate();
 
     const {
-        nome_marca,
-        sigla_marca,
-
-        setNome_marca,
-        setSigla_marca,
-
+        nome_Marca,
+        sigla_Marca,
+        setNome_Marca,
+        setSigla_Marca,
         carregando,
         cadastrar,
         editar,
-
         mensagem,
         tipoMensagem,
         limparMensagem,
-
         modoEdicao,
     } = useMarcaForm(id);
 
     const handleSubmit = async (
-        event: React.FormEvent<HTMLFormElement>
+        event: FormEvent<HTMLFormElement>
     ) => {
         event.preventDefault();
 
@@ -61,8 +65,9 @@ export default function MarcaForm() {
             <div className="usuario-form-table">
 
                 {mensagem && (
-                    <div className={`mensagem ${tipoMensagem}`}>
-
+                    <div
+                        className={`mensagem ${tipoMensagem}`}
+                    >
                         <i
                             className={
                                 tipoMensagem === "sucesso"
@@ -82,7 +87,6 @@ export default function MarcaForm() {
                         >
                             <i className="fas fa-times"></i>
                         </button>
-
                     </div>
                 )}
 
@@ -93,45 +97,51 @@ export default function MarcaForm() {
                         {/* Nome da Marca */}
 
                         <div>
-                            <label htmlFor="nome_marca">
+
+                            <label htmlFor="nome_Marca">
                                 Nome da Marca
                             </label>
 
                             <input
                                 type="text"
-                                id="nome_marca"
-                                name="nome_marca"
+                                id="nome_Marca"
+                                name="nome_Marca"
                                 placeholder="Digite o nome da marca"
-                                value={nome_marca}
+                                value={nome_Marca}
                                 onChange={(event) =>
-                                    setNome_marca(event.target.value)
+                                    setNome_Marca(
+                                        event.target.value
+                                    )
                                 }
                                 maxLength={100}
                                 required
                             />
+
                         </div>
 
                         {/* Sigla */}
 
                         <div>
-                            <label htmlFor="sigla_marca">
+
+                            <label htmlFor="sigla_Marca">
                                 Sigla da Marca
                             </label>
 
                             <input
                                 type="text"
-                                id="sigla_marca"
-                                name="sigla_marca"
+                                id="sigla_Marca"
+                                name="sigla_Marca"
                                 placeholder="Digite a sigla da marca"
-                                value={sigla_marca}
+                                value={sigla_Marca}
                                 onChange={(event) =>
-                                    setSigla_marca(
+                                    setSigla_Marca(
                                         event.target.value.toUpperCase()
                                     )
                                 }
                                 maxLength={5}
                                 required
                             />
+
                         </div>
 
                         {/* Botão */}
@@ -158,12 +168,14 @@ export default function MarcaForm() {
                 <div className="UserForm-footer">
 
                     <p>
+
                         <Link
                             className="no-underline"
                             to="/marcas"
                         >
                             Voltar para marcas
                         </Link>
+
                     </p>
 
                 </div>

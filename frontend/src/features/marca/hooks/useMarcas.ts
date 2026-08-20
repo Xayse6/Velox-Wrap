@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 
-import { getMarcas, deleteMarca} from "../services/marcaService";
+import {
+    getMarcas,
+    deleteMarca,
+} from "../services/marcaService";
 
 import type { Marca } from "../types/marca";
 
 export default function useMarcas() {
     const [marcas, setMarcas] = useState<Marca[]>([]);
+
     const [carregando, setCarregando] = useState(true);
+
     const [erro, setErro] = useState("");
 
     useEffect(() => {
@@ -17,7 +22,10 @@ export default function useMarcas() {
                 setMarcas(data);
             } catch (error) {
                 console.error(error);
-                setErro("Não foi possível carregar as marcas.");
+
+                setErro(
+                    "Não foi possível carregar as marcas."
+                );
             } finally {
                 setCarregando(false);
             }
@@ -26,9 +34,11 @@ export default function useMarcas() {
         loadMarcas();
     }, []);
 
-    const deleteMarcaById = async (id_Marca: number) => {
+    const deleteMarcaById = async (
+        id_Marca: number
+    ) => {
         const confirmar = window.confirm(
-            "Tem certeza que deseja excluir esta Marca?"
+            "Tem certeza que deseja excluir esta marca?"
         );
 
         if (!confirmar) {
@@ -40,12 +50,16 @@ export default function useMarcas() {
 
             setMarcas((marcasAtuais) =>
                 marcasAtuais.filter(
-                    (marca) => marca.id_marca !== id_Marca
+                    (marca) =>
+                        marca.id_Marca !== id_Marca
                 )
             );
         } catch (error) {
             console.error(error);
-            alert("Não foi possível excluir a marca.");
+
+            alert(
+                "Não foi possível excluir a marca."
+            );
         }
     };
 

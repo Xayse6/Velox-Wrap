@@ -1,78 +1,107 @@
 import { useEffect, useState } from "react";
 
-import { inserirUser } from "../services/inserirUser";
-import { buscarUser } from "../services/buscarUsuario";
-import { editarUser } from "../services/editarUsuario";
+import {
+    inserirUsuario,
+    buscarUsuario,
+    editarUsuario,
+} from "../../usuario/services/usuarioService";
 
 export default function useUserForm(id?: string) {
+    // ==========================================
+    // ESTADOS
+    // ==========================================
 
-    const [nome, setNome] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [nome, setNome] = useState<string>("");
+    const [cpf, setCpf] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [senha, setSenha] = useState<string>("");
 
     const [carregando, setCarregando] = useState(false);
 
     const [mensagem, setMensagem] = useState("");
+
     const [tipoMensagem, setTipoMensagem] =
         useState<"sucesso" | "erro" | "">("");
 
     const modoEdicao = Boolean(id);
+
+    // ==========================================
+    // LIMPAR MENSAGEM
+    // ==========================================
 
     const limparMensagem = () => {
         setMensagem("");
         setTipoMensagem("");
     };
 
-    // Buscar usuário quando estiver editando
-    useEffect(() => {
+    // ==========================================
+    // BUSCAR USUÁRIO PARA EDIÇÃO
+    // ==========================================
 
-        if (!id) return;
+    useEffect(() => {
+        if (!id) {
+            return;
+        }
 
         const carregarUsuario = async () => {
-
             try {
                 setCarregando(true);
                 limparMensagem();
 
-                const usuario = await buscarUser(id);
+                const usuario = await buscarUsuario(id);
 
-                setNome(usuario.nome);
-                setCpf(usuario.cpf);
-                setEmail(usuario.email);
+                setNome(usuario.nome_Usuario ?? "");
+                setCpf(usuario.cpf_Usuario ?? "");
+                setEmail(usuario.email_Usuario ?? "");
 
+                // Não carregamos a senha do banco.
+                // O campo permanece vazio.
+                setSenha("");
             } catch (error) {
-
-                console.error(error);
+                console.error(
+                    "Erro ao carregar usuário:",
+                    error
+                );
 
                 setMensagem(
-                    "Não foi possível carregar o usuário."
+                    error instanceof Error
+                        ? error.message
+                        : "Não foi possível carregar o usuário."
                 );
 
                 setTipoMensagem("erro");
-
             } finally {
                 setCarregando(false);
             }
         };
 
         carregarUsuario();
-
     }, [id]);
 
-    // Cadastro
+    // ==========================================
+    // CADASTRAR USUÁRIO
+    // ==========================================
+
     const cadastrar = async (): Promise<boolean> => {
+        if (!nome || !cpf || !email || !senha) {
+            setMensagem(
+                "Preencha todos os campos obrigatórios."
+            );
+
+            setTipoMensagem("erro");
+
+            return false;
+        }
 
         try {
-
             setCarregando(true);
             limparMensagem();
 
-            await inserirUser({
-                nome,
-                cpf,
-                email,
-                senha,
+            await inserirUsuario({
+                nome_Usuario: nome,
+                cpf_Usuario: cpf,
+                email_Usuario: email,
+                senha_Usuario: senha,
             });
 
             setMensagem(
@@ -87,42 +116,58 @@ export default function useUserForm(id?: string) {
             setSenha("");
 
             return true;
-
         } catch (error) {
-
-            console.error(error);
+            console.error(
+                "Erro ao cadastrar usuário:",
+                error
+            );
 
             setMensagem(
-                "Não foi possível cadastrar o usuário."
+                error instanceof Error
+                    ? error.message
+                    : "Não foi possível cadastrar o usuário."
             );
 
             setTipoMensagem("erro");
 
             return false;
-
         } finally {
-
             setCarregando(false);
         }
     };
 
-    // Edição
-    const editar = async (): Promise<boolean> => {
+    // ==========================================
+    // EDITAR USUÁRIO
+    // ==========================================
 
+    const editar = async (): Promise<boolean> => {
         if (!id) {
             return false;
         }
 
-        try {
+        if (!nome || !cpf || !email) {
+            setMensagem(
+                "Nome, CPF e e-mail são obrigatórios."
+            );
 
+            setTipoMensagem("erro");
+
+            return false;
+        }
+
+        try {
             setCarregando(true);
             limparMensagem();
 
-            await editarUser(id, {
-                nome,
-                cpf,
-                email,
-                senha: senha || undefined,
+            await editarUsuario(id, {
+                nome_Usuario: nome,
+                cpf_Usuario: cpf,
+                email_Usuario: email,
+
+                // Só envia senha se o usuário digitou uma nova.
+                ...(senha
+                    ? { senha_Usuario: senha }
+                    : {}),
             });
 
             setMensagem(
@@ -132,24 +177,29 @@ export default function useUserForm(id?: string) {
             setTipoMensagem("sucesso");
 
             return true;
-
         } catch (error) {
-
-            console.error(error);
+            console.error(
+                "Erro ao atualizar usuário:",
+                error
+            );
 
             setMensagem(
-                "Não foi possível atualizar o usuário."
+                error instanceof Error
+                    ? error.message
+                    : "Não foi possível atualizar o usuário."
             );
 
             setTipoMensagem("erro");
 
             return false;
-
         } finally {
-
             setCarregando(false);
         }
     };
+
+    // ==========================================
+    // RETORNO
+    // ==========================================
 
     return {
         nome,
@@ -173,6 +223,7 @@ export default function useUserForm(id?: string) {
 
         mensagem,
         tipoMensagem,
+
         limparMensagem,
     };
 }

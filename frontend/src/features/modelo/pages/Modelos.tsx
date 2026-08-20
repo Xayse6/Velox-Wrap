@@ -47,7 +47,6 @@ export default function Modelos() {
                     )}
 
                     {!carregando && !erro && (
-
                         <table className="modelos-table">
 
                             <thead>
@@ -62,27 +61,29 @@ export default function Modelos() {
 
                             <tbody>
 
-                                {modelos?.map((modelo) => (
+                                {modelos.map((modelo) => (
 
-                                    <tr key={modelo.id_modelo}>
+                                    <tr
+                                        key={modelo.id_Modelo}
+                                    >
 
                                         <td
                                             className="text-center"
                                             data-label="ID"
                                         >
-                                            {modelo.id_modelo}
+                                            {modelo.id_Modelo}
                                         </td>
 
                                         <td data-label="Nome do Modelo">
-                                            {modelo.nome_modelo}
+                                            {modelo.nome_Modelo}
                                         </td>
 
                                         <td data-label="Ano do Modelo">
-                                            {modelo.ano_modelo}
+                                            {modelo.ano_Modelo}
                                         </td>
 
                                         <td data-label="Marca">
-                                            {modelo.nome_marca}
+                                            {modelo.nome_Marca}
                                         </td>
 
                                         <td data-label="Ações">
@@ -90,7 +91,7 @@ export default function Modelos() {
                                             <div className="acoes">
 
                                                 <Link
-                                                    to={`/modelo/edit/${modelo.id_modelo}`}
+                                                    to={`/modelo/edit/${modelo.id_Modelo}`}
                                                     className="btn-editar"
                                                 >
                                                     <i className="fas fa-edit"></i>
@@ -108,7 +109,6 @@ export default function Modelos() {
                             </tbody>
 
                         </table>
-
                     )}
 
                 </div>

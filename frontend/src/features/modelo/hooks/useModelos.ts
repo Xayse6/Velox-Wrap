@@ -9,7 +9,9 @@ import type { Modelo } from "../types/modelo";
 
 export default function useModelos() {
     const [modelos, setModelos] = useState<Modelo[]>([]);
+
     const [carregando, setCarregando] = useState(true);
+
     const [erro, setErro] = useState("");
 
     useEffect(() => {
@@ -32,7 +34,9 @@ export default function useModelos() {
         loadModelos();
     }, []);
 
-    const deleteModeloById = async (id_Modelo: number) => {
+    const deleteModeloById = async (
+        id_Modelo: number
+    ) => {
         const confirmar = window.confirm(
             "Tem certeza que deseja excluir este modelo?"
         );
@@ -47,7 +51,7 @@ export default function useModelos() {
             setModelos((modelosAtuais) =>
                 modelosAtuais.filter(
                     (modelo) =>
-                        modelo.id_modelo !== id_Modelo
+                        modelo.id_Modelo !== id_Modelo
                 )
             );
         } catch (error) {

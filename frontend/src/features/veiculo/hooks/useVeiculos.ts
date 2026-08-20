@@ -5,77 +5,125 @@ import {
     deleteVeiculo,
 } from "../services/veiculosService";
 
-import type { Veiculo } from "../types/veiculos";
+import type { Veiculo } from "../types/veiculo";
+
 
 export default function useVeiculos() {
 
     const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
+
     const [carregando, setCarregando] = useState(true);
+
     const [erro, setErro] = useState("");
+
+
 
     useEffect(() => {
 
-        async function loadVeiculos() {
+        async function carregarVeiculos() {
 
             try {
 
-                const data = await getVeiculos();
+                setCarregando(true);
 
-                setVeiculos(data);
+                setErro("");
+
+                const dados = await getVeiculos();
+
+                setVeiculos(dados);
+
 
             } catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Erro ao carregar veículos:",
+                    error
+                );
 
                 setErro(
                     "Não foi possível carregar os veículos."
                 );
 
+
             } finally {
 
                 setCarregando(false);
+
             }
+
         }
 
-        loadVeiculos();
+
+        carregarVeiculos();
 
     }, []);
 
-    const deleteVeiculoById = async (id_veiculo: number) => {
+
+
+
+    const deleteVeiculoById = async (
+        id_Veiculo: number
+    ) => {
+
 
         const confirmar = window.confirm(
             "Tem certeza que deseja excluir este veículo?"
         );
 
+
         if (!confirmar) {
             return;
         }
 
+
+
         try {
 
-            await deleteVeiculo(id_veiculo);
 
-            setVeiculos((veiculosAtuais) =>
-                veiculosAtuais.filter(
-                    (veiculo) =>
-                        veiculo.id_veiculo !== id_veiculo
-                )
+            await deleteVeiculo(id_Veiculo);
+
+
+
+            setVeiculos(
+                (veiculosAtuais) =>
+                    veiculosAtuais.filter(
+                        (veiculo) =>
+                            veiculo.id_Veiculo !== id_Veiculo
+                    )
             );
+
+
 
         } catch (error) {
 
-            console.error(error);
+
+            console.error(
+                "Erro ao excluir veículo:",
+                error
+            );
+
 
             alert(
                 "Não foi possível excluir o veículo."
             );
+
         }
+
     };
 
+
+
+
     return {
+
         veiculos,
+
         carregando,
+
         erro,
+
         deleteVeiculo: deleteVeiculoById,
+
     };
+
 }

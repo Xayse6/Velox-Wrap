@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 import "../css/marca.css";
 
-import useMarca from "../hooks/useMarcas";
+import useMarcas from "../hooks/useMarcas";
 
 export default function Marcas() {
     const {
         marcas,
         carregando,
         erro,
-    } = useMarca();
+    } = useMarcas();
 
     return (
         <main className="marcas-container">
@@ -61,23 +61,25 @@ export default function Marcas() {
 
                             <tbody>
 
-                                {marcas?.map((marca) => (
+                                {marcas.map((marca) => (
 
-                                    <tr key={marca.id_marca}>
+                                    <tr
+                                        key={marca.id_Marca}
+                                    >
 
                                         <td
                                             className="text-center"
                                             data-label="ID"
                                         >
-                                            {marca.id_marca}
+                                            {marca.id_Marca}
                                         </td>
 
                                         <td data-label="Nome da Marca">
-                                            {marca.nome_marca}
+                                            {marca.nome_Marca}
                                         </td>
 
                                         <td data-label="Sigla">
-                                            {marca.sigla_marca}
+                                            {marca.sigla_Marca}
                                         </td>
 
                                         <td data-label="Ações">
@@ -85,7 +87,7 @@ export default function Marcas() {
                                             <div className="acoes">
 
                                                 <Link
-                                                    to={`/marca/edit/${marca.id_marca}`}
+                                                    to={`/marca/edit/${marca.id_Marca}`}
                                                     className="btn-editar"
                                                 >
                                                     <i className="fas fa-edit"></i>
