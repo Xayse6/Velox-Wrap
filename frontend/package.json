@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 80",
+    "dev": "vite --host --port 80",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.19.0",
     "bcrypt": "^6.0.0",
     "pg": "^8.23.0",
     "react": "^19.2.8",

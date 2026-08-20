@@ -1,51 +1,62 @@
 import { Link } from "react-router-dom";
 
-import "../css/usuario.css";
+import "../css/veiculo.css";
 
-import useUsers from "../hooks/useUsers";
+import useVeiculos from "../hooks/useVeiculos";
 
-export default function Users() {
+
+export default function Veiculos() {
+
     const {
-        usuarios,
+        veiculos,
         carregando,
         erro,
-        deleteUser,
-    } = useUsers();
+        deleteVeiculo,
+    } = useVeiculos();
+
 
     return (
-        <main className="usuarios-container">
 
-            {/* HEADER */}
-            <section className="usuarios-header">
+        <main className="veiculos-container">
+
+            <section className="veiculos-header">
 
                 <div>
-                    <h1>Usuários</h1>
+                    <h1>Veículos</h1>
 
                     <p>
-                        Gerenciamento completo de usuários do sistema
+                        Gerenciamento completo de veículos do sistema
                     </p>
                 </div>
 
+
                 <Link
-                    to="/cadastro"
+                    to="/cadastroVeiculos"
                     className="btn-novo"
                 >
-                    <i className="fas fa-user-plus"></i>
-                    Novo Usuário
+
+                    <i className="fas fa-car"></i>
+
+                    Novo Veículo
+
                 </Link>
 
             </section>
 
-            {/* TABELA */}
-            <section className="usuarios-card">
+
+
+            <section className="veiculos-card">
 
                 <div className="table-container">
 
+
                     {carregando && (
                         <p>
-                            Carregando usuários...
+                            Carregando veículos...
                         </p>
                     )}
+
+
 
                     {erro && (
                         <p>
@@ -53,96 +64,131 @@ export default function Users() {
                         </p>
                     )}
 
+
+
                     {!carregando && !erro && (
-                        <table className="usuarios-table">
+
+                        <table className="veiculos-table">
 
                             <thead>
+
                                 <tr>
+
                                     <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>CPF</th>
-                                    <th>Email</th>
+                                    <th>Usuário</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Ano</th>
                                     <th>Ações</th>
+
                                 </tr>
+
                             </thead>
+
+
 
                             <tbody>
 
-                                {usuarios.map((usuario) => (
+                                {veiculos.map((veiculo) => (
 
                                     <tr
-                                        key={usuario.id_Usuario}
+                                        key={veiculo.id_Veiculo}
                                     >
 
-                                        {/* ID */}
                                         <td
                                             className="text-center"
                                             data-label="ID"
                                         >
-                                            {usuario.id_Usuario}
+                                            {veiculo.id_Veiculo}
                                         </td>
 
-                                        {/* NOME */}
-                                        <td data-label="Nome">
-                                            {usuario.nome_Usuario}
+
+                                        <td data-label="Usuário">
+                                            {veiculo.nome_Usuario}
                                         </td>
 
-                                        {/* CPF */}
-                                        <td data-label="CPF">
-                                            {usuario.cpf_Usuario}
+
+                                        <td data-label="Marca">
+                                            {veiculo.nome_Marca}
                                         </td>
 
-                                        {/* EMAIL */}
-                                        <td data-label="Email">
-                                            {usuario.email_Usuario}
+
+                                        <td data-label="Modelo">
+                                            {veiculo.nome_Modelo}
                                         </td>
 
-                                        {/* AÇÕES */}
+
+                                        <td data-label="Ano">
+                                            {veiculo.ano_Modelo}
+                                        </td>
+
+
                                         <td data-label="Ações">
 
                                             <div className="acoes">
 
-                                                {/* EDITAR */}
+
                                                 <Link
-                                                    to={`/usuario/edit/${usuario.id_Usuario}`}
+                                                    to={`/veiculo/edit/${veiculo.id_Veiculo}`}
                                                     className="btn-editar"
                                                 >
+
                                                     <i className="fas fa-edit"></i>
+
                                                     Alterar
+
                                                 </Link>
 
-                                                {/* EXCLUIR */}
+
+
                                                 <button
+
                                                     type="button"
+
                                                     className="btn-excluir"
+
                                                     title="Excluir"
+
                                                     onClick={() =>
-                                                        deleteUser(
-                                                            usuario.id_Usuario
+                                                        deleteVeiculo(
+                                                            veiculo.id_Veiculo
                                                         )
                                                     }
+
                                                 >
+
                                                     <i className="fas fa-trash"></i>
+
                                                     Excluir
+
                                                 </button>
+
 
                                             </div>
 
                                         </td>
 
+
                                     </tr>
 
                                 ))}
 
+
                             </tbody>
 
+
                         </table>
+
                     )}
+
 
                 </div>
 
             </section>
 
+
         </main>
+
     );
+
 }

@@ -1,0 +1,596 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+/* ==========================================================================
+   Variáveis
+   ========================================================================== */
+
+:root {
+    --color-bg: #0A101E;
+    --color-surface: #0D1526;
+    --color-surface-light: #111C31;
+    --color-surface-hover: #13243A;
+
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-strong: rgba(255, 255, 255, 0.14);
+
+    --color-text-primary: #E7EAF2;
+    --color-text-secondary: #9AA4B8;
+    --color-text-muted: #69758B;
+
+    --color-teal: #14A3A5;
+    --color-teal-dark: #0E8385;
+    --color-teal-soft: rgba(20, 163, 165, 0.12);
+
+    --color-coral: #D64550;
+    --color-coral-soft: rgba(214, 69, 80, 0.12);
+
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+
+    --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Container
+   ========================================================================== */
+
+.veiculos-form-container {
+    width: 100%;
+    min-height: 100%;
+    flex: 1;
+
+    padding: 40px 48px 64px;
+
+    background:
+        linear-gradient(
+            rgba(10, 16, 30, 0.68),
+            rgba(10, 16, 30, 0.68)
+        ),
+        url("../assets/principal.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   Cabeçalho
+   ========================================================================== */
+
+.veiculos-form-header {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto 28px;
+    padding: 24px 28px;
+
+    background: rgba(13, 21, 38, 0.94);
+
+    border: 1px solid rgba(20, 163, 165, 0.18);
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.veiculos-form-header h1 {
+    margin: 0 0 8px;
+
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+
+    letter-spacing: -0.01em;
+
+    color: var(--color-text-primary);
+}
+
+.veiculos-form-header h1::after {
+    content: "";
+
+    display: block;
+
+    width: 36px;
+    height: 4px;
+
+    margin-top: 10px;
+
+    border-radius: var(--radius-pill);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--color-teal),
+            transparent
+        );
+}
+
+.veiculos-form-header p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Card do formulário
+   ========================================================================== */
+
+.veiculo-form-card {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+    padding: 32px;
+
+    background: rgba(13, 21, 38, 0.96);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* ==========================================================================
+   Formulário
+   ========================================================================== */
+
+.veiculo-form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* ==========================================================================
+   Campo
+   ========================================================================== */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    font-family: var(--font-display);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+
+.campo label::after {
+    content: " *";
+
+    color: var(--color-teal);
+}
+
+/* ==========================================================================
+   Inputs e Selects
+   ========================================================================== */
+
+.campo input,
+.campo select {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    color: var(--color-text-primary);
+    background: var(--color-surface-light);
+
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+
+    outline: none;
+
+    font-family: var(--font-body);
+    font-size: 14px;
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.campo input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.campo input:hover,
+.campo select:hover {
+    background: var(--color-surface-hover);
+
+    border-color:
+        rgba(20, 163, 165, 0.35);
+}
+
+.campo input:focus,
+.campo select:focus {
+    background: var(--color-surface-hover);
+
+    border-color: var(--color-teal);
+
+    box-shadow:
+        0 0 0 3px rgba(20, 163, 165, 0.12);
+}
+
+/* ==========================================================================
+   Select
+   ========================================================================== */
+
+.campo select {
+    cursor: pointer;
+    appearance: auto;
+}
+
+.campo select option {
+    color: var(--color-text-primary);
+    background: var(--color-surface-light);
+}
+
+/* ==========================================================================
+   Botão
+   ========================================================================== */
+
+.veiculo-form-card form > button {
+    width: 100%;
+    height: 48px;
+
+    margin-top: 8px;
+
+    border: none;
+    border-radius: var(--radius-pill);
+
+    color: #FFFFFF;
+    background: var(--color-teal);
+
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(20, 163, 165, 0.18);
+
+    transition:
+        transform var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.veiculo-form-card form > button:hover:not(:disabled) {
+    background: var(--color-teal-dark);
+
+    box-shadow:
+        0 0 0 4px rgba(20, 163, 165, 0.16);
+
+    transform: translateY(-1px);
+}
+
+.veiculo-form-card form > button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.veiculo-form-card form > button:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+}
+
+.veiculo-form-card form > button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   Mensagem
+   ========================================================================== */
+
+.mensagem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+
+    margin-bottom: 24px;
+    padding: 13px 15px;
+
+    border-radius: var(--radius-md);
+
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.mensagem i {
+    flex-shrink: 0;
+
+    font-size: 15px;
+}
+
+.mensagem span {
+    flex: 1;
+}
+
+/* ==========================================================================
+   Mensagem - Sucesso
+   ========================================================================== */
+
+.mensagem.sucesso {
+    color: #5FD6D8;
+
+    background: var(--color-teal-soft);
+
+    border: 1px solid rgba(20, 163, 165, 0.25);
+}
+
+/* ==========================================================================
+   Mensagem - Erro
+   ========================================================================== */
+
+.mensagem.erro {
+    color: #FF8A92;
+
+    background: var(--color-coral-soft);
+
+    border: 1px solid rgba(214, 69, 80, 0.25);
+}
+
+/* ==========================================================================
+   Botão fechar mensagem
+   ========================================================================== */
+
+.mensagem button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+
+    color: inherit;
+    background: transparent;
+
+    border: none;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition);
+}
+
+.mensagem button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.mensagem button i {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.veiculos-form-footer {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 24px;
+    padding-top: 24px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+.veiculos-form-footer a {
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        color var(--transition);
+}
+
+.veiculos-form-footer a:hover {
+    color: var(--color-teal);
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   Loading
+   ========================================================================== */
+
+.veiculos-form-loading {
+    width: 100%;
+    max-width: 900px;
+
+    min-height: 300px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    background: rgba(13, 21, 38, 0.96);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.veiculos-form-loading i {
+    font-size: 24px;
+
+    color: var(--color-teal);
+}
+
+.veiculos-form-loading p {
+    margin: 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 14px;
+}
+
+.campo input:valid,
+.campo select:valid {
+    border-color: rgba(20, 163, 165, 0.25);
+}
+
+
+@media (max-width: 900px) {
+
+    .veiculos-form-container {
+        padding: 28px 20px 40px;
+    }
+
+    .veiculos-form-header {
+        padding: 22px;
+    }
+
+    .veiculo-form-card {
+        padding: 26px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .veiculos-form-container {
+        padding: 20px 14px 32px;
+
+        background-attachment: scroll;
+    }
+
+    .veiculos-form-header {
+        padding: 20px;
+
+        margin-bottom: 20px;
+
+        border-radius: 14px;
+    }
+
+    .veiculos-form-header h1 {
+        font-size: 26px;
+    }
+
+    .veiculos-form-header p {
+        font-size: 13px;
+    }
+
+    .veiculo-form-card {
+        padding: 22px 18px;
+
+        border-radius: 14px;
+    }
+
+    .veiculo-form-card form {
+        gap: 18px;
+    }
+
+    .campo {
+        gap: 7px;
+    }
+
+    .campo label {
+        font-size: 12.5px;
+    }
+
+    .campo input,
+    .campo select {
+        height: 46px;
+
+        font-size: 13px;
+    }
+
+    .veiculo-form-card form > button {
+        height: 46px;
+
+        margin-top: 4px;
+
+        font-size: 13px;
+    }
+
+    .mensagem {
+        align-items: flex-start;
+
+        font-size: 12.5px;
+    }
+
+    .veiculos-form-footer {
+        margin-top: 20px;
+
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .veiculos-form-container {
+        padding: 14px 10px 24px;
+    }
+
+    .veiculos-form-header {
+        padding: 18px;
+    }
+
+    .veiculos-form-header h1 {
+        font-size: 23px;
+    }
+
+    .veiculo-form-card {
+        padding: 20px 15px;
+    }
+
+    .campo input,
+    .campo select {
+        height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+        transition: none !important;
+    }
+}
