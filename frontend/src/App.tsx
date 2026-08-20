@@ -6,8 +6,20 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import Home from "./features/home/pages/Home";
+
 import Usuarios from "./features/usuario/pages/Usuarios";
 import Cadastro from "./features/auth/pages/Cadastro";
+
+import Marcas from "./features/marca/pages/Marcas";
+import CadastroMarcas from "./features/marca/pages/CadastroMarcas";
+
+import Modelos from "./features/modelo/pages/Modelos";
+// import CadastroModelos from "./features/modelo/pages/CadastroModelos";
+
+import Veiculos from "./features/veiculo/pages/Veiculos";
+// import CadastroModelos from "./features/modelo/pages/CadastroModelos";
+
+
 import Login from "./features/auth/pages/Login";
 
 export default function App() {
@@ -22,13 +34,21 @@ export default function App() {
 
                     <Route path="/" element={<Home />}/>
 
+                    <Route path="/login" element={<Login />}/>
+
                     <Route path="/usuarios" element={<Usuarios />}/>
-
                     <Route path="/cadastro"element={<Cadastro />}/>
-
                     <Route path="/usuario/edit/:id" element={<Cadastro />}/>
 
-                    <Route path="/login" element={<Login />}/>
+                    <Route path="/marcas" element={<Marcas />}/>
+                    <Route path="/cadastroMarcas" element={<CadastroMarcas />}/>
+                    <Route path="/marca/edit/:id" element={<CadastroMarcas />}/>
+
+                    <Route path="/modelos" element={<Modelos />}/>
+                    {/* <Route path="/cadastroMarcas" element={<CadastroMarcas />}/>
+                    <Route path="/marca/edit/:id" element={<CadastroMarcas />}/> */}
+
+                    <Route path="/veiculos" element={<Veiculos />}/>
 
                 </Routes>
             </main>

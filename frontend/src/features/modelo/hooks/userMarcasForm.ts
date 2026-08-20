@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { inserirUser } from "../services/inserirUser";
-import { buscarUser } from "../services/buscarUsuario";
-import { editarUser } from "../services/editarUsuario";
+import { inserirMarca } from "../services/inserirMarca";
+import { buscarMarca } from "../services/buscarMarca";
+import { editarMarca } from "../services/editarMarca";
 
-export default function useUserForm(id?: string) {
+export default function useMarcaForm(id?: string) {
 
-    const [nome, setNome] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [nome_marca, setNome_marca] = useState("");
+    const [sigla_marca, setSigla_marca] = useState("");
 
     const [carregando, setCarregando] = useState(false);
 
@@ -24,43 +22,51 @@ export default function useUserForm(id?: string) {
         setTipoMensagem("");
     };
 
-    // Buscar usuário quando estiver editando
+    // ==========================================================
+    // CARREGAR MARCA PARA EDIÇÃO
+    // ==========================================================
+
     useEffect(() => {
 
         if (!id) return;
 
-        const carregarUsuario = async () => {
+        const carregarMarca = async () => {
 
             try {
+
                 setCarregando(true);
                 limparMensagem();
 
-                const usuario = await buscarUser(id);
+                const marca = await buscarMarca(id);
 
-                setNome(usuario.nome);
-                setCpf(usuario.cpf);
-                setEmail(usuario.email);
+                setNome_marca(marca.nome_marca);
+                setSigla_marca(marca.sigla_marca);
 
             } catch (error) {
 
                 console.error(error);
 
                 setMensagem(
-                    "Não foi possível carregar o usuário."
+                    "Não foi possível carregar a marca."
                 );
 
                 setTipoMensagem("erro");
 
             } finally {
+
                 setCarregando(false);
+
             }
         };
 
-        carregarUsuario();
+        carregarMarca();
 
     }, [id]);
 
-    // Cadastro
+    // ==========================================================
+    // CADASTRAR
+    // ==========================================================
+
     const cadastrar = async (): Promise<boolean> => {
 
         try {
@@ -68,23 +74,19 @@ export default function useUserForm(id?: string) {
             setCarregando(true);
             limparMensagem();
 
-            await inserirUser({
-                nome,
-                cpf,
-                email,
-                senha,
+            await inserirMarca({
+                nome_marca,
+                sigla_marca,
             });
 
             setMensagem(
-                "Usuário cadastrado com sucesso!"
+                "Marca cadastrada com sucesso!"
             );
 
             setTipoMensagem("sucesso");
 
-            setNome("");
-            setCpf("");
-            setEmail("");
-            setSenha("");
+            setNome_marca("");
+            setSigla_marca("");
 
             return true;
 
@@ -93,7 +95,7 @@ export default function useUserForm(id?: string) {
             console.error(error);
 
             setMensagem(
-                "Não foi possível cadastrar o usuário."
+                "Não foi possível cadastrar a marca."
             );
 
             setTipoMensagem("erro");
@@ -103,10 +105,14 @@ export default function useUserForm(id?: string) {
         } finally {
 
             setCarregando(false);
+
         }
     };
 
-    // Edição
+    // ==========================================================
+    // EDITAR
+    // ==========================================================
+
     const editar = async (): Promise<boolean> => {
 
         if (!id) {
@@ -118,15 +124,13 @@ export default function useUserForm(id?: string) {
             setCarregando(true);
             limparMensagem();
 
-            await editarUser(id, {
-                nome,
-                cpf,
-                email,
-                senha: senha || undefined,
+            await editarMarca(id, {
+                nome_marca,
+                sigla_marca,
             });
 
             setMensagem(
-                "Usuário atualizado com sucesso!"
+                "Marca atualizada com sucesso!"
             );
 
             setTipoMensagem("sucesso");
@@ -138,7 +142,7 @@ export default function useUserForm(id?: string) {
             console.error(error);
 
             setMensagem(
-                "Não foi possível atualizar o usuário."
+                "Não foi possível atualizar a marca."
             );
 
             setTipoMensagem("erro");
@@ -148,21 +152,16 @@ export default function useUserForm(id?: string) {
         } finally {
 
             setCarregando(false);
+
         }
     };
 
     return {
-        nome,
-        setNome,
+        nome_marca,
+        setNome_marca,
 
-        cpf,
-        setCpf,
-
-        email,
-        setEmail,
-
-        senha,
-        setSenha,
+        sigla_marca,
+        setSigla_marca,
 
         carregando,
 

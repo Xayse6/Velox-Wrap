@@ -1,0 +1,134 @@
+CREATE TABLE usuarios (
+    idUsuario SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+
+create table marcas(
+	id_Marca SERIAL PRIMARY KEY,
+    nome_Marca VARCHAR(100) NOT NULL UNIQUE,
+	sigla_Marca char (5) not null unique
+);
+
+CREATE TABLE modelos (
+    id_Modelo SERIAL PRIMARY KEY,
+    nome_Modelo VARCHAR(100) NOT NULL,
+    ano_Modelo INTEGER NOT NULL,
+
+    id_Marca INTEGER NOT NULL,
+
+    CONSTRAINT fk_modelo_marca
+        FOREIGN KEY (id_Marca)
+        REFERENCES marcas(id_Marca),
+
+    CONSTRAINT unique_modelo_ano
+        UNIQUE (nome_Modelo, ano_Modelo, id_Marca)
+);
+
+CREATE TABLE veiculos (
+    id_Veiculo SERIAL PRIMARY KEY,
+
+    idUsuario INTEGER NOT NULL,
+    id_Modelo INTEGER NOT NULL,
+
+    CONSTRAINT fk_veiculo_usuario
+        FOREIGN KEY (idUsuario)
+        REFERENCES usuarios(idUsuario)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_veiculo_modelo
+        FOREIGN KEY (id_Modelo)
+        REFERENCES modelos(id_Modelo)
+        ON DELETE RESTRICT
+);
+
+INSERT INTO usuarios (
+    nome,
+    cpf,
+    email,
+    senha
+) VALUES
+    ('João Silva', '11111111111', 'joao@email.com', '$2b$10$EXEMPLO'),
+    ('Maria Santos', '22222222222', 'maria@email.com', '$2b$10$EXEMPLO'),
+    ('Carlos Oliveira', '33333333333', 'carlos@email.com', '$2b$10$EXEMPLO'),
+    ('Ana Souza', '44444444444', 'ana@email.com', '$2b$10$EXEMPLO');
+
+INSERT INTO marcas (
+    nome_marca,
+    sigla_marca
+) VALUES
+    ('Toyota', 'TOY'),
+    ('Honda', 'HON'),
+    ('Volkswagen', 'VW'),
+    ('Chevrolet', 'CHE'),
+    ('Ford', 'FORD'),
+    ('Fiat', 'FIAT'),
+    ('Hyundai', 'HYU'),
+    ('Nissan', 'NIS'),
+    ('Kia', 'KIA'),
+    ('BMW', 'BMW'),
+    ('Mercedes-Benz', 'MB'),
+    ('Audi', 'AUD'),
+    ('Volvo', 'VOL'),
+    ('Porsche', 'POR'),
+    ('Mitsubishi', 'MITS'),
+    ('Subaru', 'SUB'),
+    ('Mazda', 'MAZ'),
+    ('Renault', 'REN'),
+    ('Peugeot', 'PEU'),
+    ('Citroën', 'CIT'),
+    ('Jeep', 'JEEP'),
+    ('Land Rover', 'LR'),
+    ('Lexus', 'LEX'),
+    ('Chery', 'CHERY'),
+    ('BYD', 'BYD'),
+    ('GWM', 'GWM'),
+    ('Tesla', 'TESLA');
+
+INSERT INTO modelos (
+    nome_modelo,
+    ano_modelo,
+    id_marca
+) VALUES
+    -- Toyota
+    ('Corolla', 2025, 1),
+    ('Corolla Cross', 2025, 1),
+    ('Hilux', 2025, 1),
+    ('Yaris', 2025, 1),
+    ('SW4', 2025, 1),
+
+    -- Honda
+    ('Civic', 2025, 2),
+    ('City', 2025, 2),
+    ('HR-V', 2025, 2),
+    ('CR-V', 2025, 2),
+
+    -- Volkswagen
+    ('Gol', 2021, 3),
+    ('Polo', 2025, 3),
+    ('T-Cross', 2025, 3),
+    ('Nivus', 2025, 3),
+    ('Taos', 2025, 3),
+
+    -- Chevrolet
+    ('Onix', 2025, 4),
+    ('Onix Plus', 2025, 4),
+    ('Tracker', 2025, 4),
+    ('S10', 2025, 4),
+    ('Spin', 2025, 4);
+
+INSERT INTO veiculos (
+    idusuario,
+    id_modelo
+) VALUES
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (2, 4);
+
+
+drop table usuarios
+
+select * from veiculos

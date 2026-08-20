@@ -1,0 +1,646 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+:root {
+  --color-bg: #0A101E;
+  --color-surface: #0D1526;
+  --color-surface-light: #111C31;
+  --color-surface-hover: #13243A;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  --color-text-primary: #E7EAF2;
+  --color-text-secondary: #9AA4B8;
+  --color-text-muted: #69758B;
+
+  --color-navy: #16213E;
+
+  --color-teal: #14A3A5;
+  --color-teal-dark: #0E8385;
+  --color-teal-soft: rgba(20, 163, 165, 0.12);
+
+  --color-coral: #D64550;
+  --color-coral-dark: #B8323C;
+  --color-coral-soft: rgba(214, 69, 80, 0.12);
+
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Container
+   ========================================================================== */
+
+.modelos-container {
+  width: 100%;
+
+  flex: 1;
+
+  padding: 40px 48px 64px;
+
+  background:
+    linear-gradient(
+      rgba(10, 16, 30, 0.68),
+      rgba(10, 16, 30, 0.68)
+    ),
+    url("../assets/principal.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  font-family: var(--font-body);
+
+  color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   Cabeçalho
+   ========================================================================== */
+
+.modelos-header {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto 28px;
+
+  padding: 20px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  background: rgba(13, 21, 38, 0.94);
+
+  border: 1px solid rgba(20, 163, 165, 0.18);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.modelos-header h1 {
+  margin: 0 0 8px;
+
+  font-family: var(--font-display);
+
+  font-size: 30px;
+  font-weight: 700;
+
+  letter-spacing: -0.01em;
+
+  color: var(--color-text-primary);
+}
+
+.modelos-header h1::after {
+  content: '';
+
+  display: block;
+
+  width: 36px;
+  height: 4px;
+
+  margin-top: 10px;
+
+  border-radius: var(--radius-pill);
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--color-teal),
+      transparent
+    );
+}
+
+.modelos-header p {
+  margin: 0;
+
+  font-size: 14px;
+
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Botão Novo Modelo
+   ========================================================================== */
+
+.btn-novo {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 12px 20px;
+
+  flex-shrink: 0;
+
+  color: #FFFFFF;
+
+  background: var(--color-teal);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  border-radius: var(--radius-pill);
+
+  box-shadow:
+    0 4px 12px rgba(20, 163, 165, 0.18);
+
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+}
+
+.btn-novo i {
+  font-size: 13px;
+}
+
+.btn-novo:hover {
+  background: var(--color-teal-dark);
+
+  box-shadow:
+    0 0 0 4px rgba(20, 163, 165, 0.16);
+
+  transform: translateY(-1px);
+}
+
+.btn-novo:active {
+  transform: translateY(0);
+}
+
+.btn-novo:focus-visible {
+  outline: 2px solid var(--color-teal);
+
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+.modelos-card {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  background: rgba(13, 21, 38, 0.96);
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45);
+
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Container da tabela
+   ========================================================================== */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.table-container > p {
+  margin: 0;
+
+  padding: 48px 24px;
+
+  text-align: center;
+
+  color: var(--color-text-secondary);
+
+  font-size: 14.5px;
+}
+
+/* ==========================================================================
+   Tabela
+   ========================================================================== */
+
+.modelos-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  border-spacing: 0;
+
+  font-size: 14px;
+
+  table-layout: fixed;
+}
+
+/* ==========================================================================
+   Largura das colunas
+
+   ID              = 8%
+   Modelo          = 30%
+   Ano             = 15%
+   Marca           = 27%
+   Ações           = 20%
+   ========================================================================== */
+
+.modelos-table th:nth-child(1),
+.modelos-table td:nth-child(1) {
+  width: 8%;
+}
+
+.modelos-table th:nth-child(2),
+.modelos-table td:nth-child(2) {
+  width: 30%;
+}
+
+.modelos-table th:nth-child(3),
+.modelos-table td:nth-child(3) {
+  width: 15%;
+}
+
+.modelos-table th:nth-child(4),
+.modelos-table td:nth-child(4) {
+  width: 27%;
+}
+
+.modelos-table th:nth-child(5),
+.modelos-table td:nth-child(5) {
+  width: 20%;
+}
+
+/* ==========================================================================
+   Cabeçalho da tabela
+   ========================================================================== */
+
+.modelos-table thead {
+  display: table-header-group;
+}
+
+.modelos-table thead tr {
+  display: table-row;
+}
+
+.modelos-table thead th {
+  padding: 15px 20px;
+
+  text-align: left;
+
+  font-family: var(--font-display);
+
+  font-size: 11.5px;
+  font-weight: 600;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  color: var(--color-text-secondary);
+
+  background: #111C31;
+
+  border-bottom: 1px solid var(--color-border-strong);
+  border-right: 1px solid var(--color-border);
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+.modelos-table thead th:last-child {
+  border-right: none;
+}
+
+/* ==========================================================================
+   Corpo da tabela
+   ========================================================================== */
+
+.modelos-table tbody {
+  display: table-row-group;
+}
+
+.modelos-table tbody tr {
+  display: table-row;
+
+  position: relative;
+
+  border-bottom: 1px solid var(--color-border);
+
+  transition:
+    background var(--transition);
+}
+
+.modelos-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.modelos-table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+/* ==========================================================================
+   Células
+   ========================================================================== */
+
+.modelos-table tbody td {
+  display: table-cell;
+
+  padding: 16px 20px;
+
+  color: var(--color-text-primary);
+
+  vertical-align: middle;
+
+  text-align: left;
+
+  box-sizing: border-box;
+
+  border-right: 1px solid var(--color-border);
+}
+
+.modelos-table tbody td:last-child {
+  border-right: none;
+}
+
+/* ==========================================================================
+   ID
+   ========================================================================== */
+
+.modelos-table tbody td:nth-child(1) {
+  font-family: var(--font-mono);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Nome do Modelo
+   ========================================================================== */
+
+.modelos-table tbody td:nth-child(2) {
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Ano do Modelo
+   ========================================================================== */
+
+.modelos-table tbody td:nth-child(3) {
+  font-family: var(--font-mono);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Marca
+   ========================================================================== */
+
+.modelos-table tbody td:nth-child(4) {
+  color: var(--color-text-secondary);
+
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Ações
+   ========================================================================== */
+
+.acoes {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  white-space: nowrap;
+}
+
+.btn-editar,
+.btn-excluir {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 8px 14px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  border-radius: var(--radius-pill);
+
+  border: 1px solid transparent;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.btn-editar i,
+.btn-excluir i {
+  font-size: 12px;
+}
+
+/* Editar */
+
+.btn-editar {
+  background: var(--color-teal-soft);
+
+  color: #5FD6D8;
+}
+
+.btn-editar:hover {
+  background: var(--color-teal);
+
+  color: #FFFFFF;
+
+  transform: translateY(-1px);
+}
+
+/* Excluir */
+
+.btn-excluir {
+  background: var(--color-coral-soft);
+
+  color: #FF8A92;
+}
+
+.btn-excluir:hover {
+  background: var(--color-coral);
+
+  color: #FFFFFF;
+
+  transform: translateY(-1px);
+}
+
+.btn-editar:focus-visible,
+.btn-excluir:focus-visible {
+  outline: 2px solid var(--color-teal);
+
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Responsivo
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+  .modelos-container {
+    padding: 28px 20px 40px;
+  }
+
+  .modelos-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .btn-novo {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+  .modelos-container {
+    padding: 20px 14px 32px;
+
+    background-attachment: scroll;
+  }
+
+  .modelos-header {
+    padding: 20px;
+
+    margin-bottom: 20px;
+  }
+
+  .modelos-header h1 {
+    font-size: 26px;
+  }
+
+  .modelos-card {
+    border-radius: 14px;
+  }
+
+  .modelos-table thead {
+    display: none;
+  }
+
+  .modelos-table,
+  .modelos-table tbody,
+  .modelos-table tr,
+  .modelos-table td {
+    display: block;
+
+    width: 100%;
+  }
+
+  .modelos-table {
+    table-layout: auto;
+  }
+
+  .modelos-table tbody tr {
+    padding: 16px 18px;
+
+    border-bottom: 8px solid #0A101E;
+  }
+
+  .modelos-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .modelos-table td {
+    padding: 7px 0;
+
+    border: none;
+  }
+
+  .modelos-table td::before {
+    content: attr(data-label);
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-family: var(--font-display);
+
+    font-size: 10.5px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+
+    color: var(--color-text-muted);
+  }
+
+  .modelos-table td.text-center {
+    text-align: left;
+  }
+
+  .acoes {
+    margin-top: 12px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid var(--color-border);
+  }
+
+  .btn-editar,
+  .btn-excluir {
+    flex: 1;
+
+    padding: 9px 12px;
+  }
+}
+
+/* ==========================================================================
+   Movimento reduzido
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  * {
+    transition: none !important;
+  }
+}
