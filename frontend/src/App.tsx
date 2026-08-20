@@ -5,6 +5,8 @@ import "./styles/global.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+import ProtectedRoute from "./features/auth/pages/ProtectedRoute";
+
 import Home from "./features/home/pages/Home";
 
 import Usuarios from "./features/usuario/pages/Usuarios";
@@ -17,47 +19,154 @@ import Modelos from "./features/modelo/pages/Modelos";
 import CadastroModelos from "./features/modelo/pages/CadastroModelos";
 
 import Veiculos from "./features/veiculo/pages/Veiculos";
-import CadastroVeiculos from "./features/veiculo/pages/CadastroVeiculos"
-
+import CadastroVeiculos from "./features/veiculo/pages/CadastroVeiculos";
 
 import Login from "./features/auth/pages/Login";
 
+
 export default function App() {
+
     return (
         <>
             <nav>
                 <Navbar />
             </nav>
 
+
             <main className="main-content">
+
                 <Routes>
 
+
+                    {/* Rotas protegidas */}
                     <Route path="/" element={<Home />}/>
 
-                    <Route path="/login" element={<Login />}/>
+                    {/* Rota pública */}
+                    <Route  path="/login" element={<Login />}/>
 
-                    <Route path="/usuarios" element={<Usuarios />}/>
-                    <Route path="/cadastro"element={<Cadastro />}/>
-                    <Route path="/usuario/edit/:id" element={<Cadastro />}/>
+                    <Route path="/cadastro" element={<Cadastro />}/>
 
-                    <Route path="/marcas" element={<Marcas />}/>
-                    <Route path="/cadastroMarcas" element={<CadastroMarcas />}/>
-                    <Route path="/marca/edit/:id" element={<CadastroMarcas />}/>
 
-                    <Route path="/modelos" element={<Modelos />}/>
-                    <Route path="/cadastroModelos" element={<CadastroModelos />}/>
-                    <Route path="/modelo/edit/:id" element={<CadastroModelos />}/>
+                    <Route
+                        path="/usuarios"
+                        element={
+                            <ProtectedRoute>
+                                <Usuarios />
+                            </ProtectedRoute>
+                        }
+                    />
 
-                    <Route path="/veiculos" element={<Veiculos />}/>
-                    <Route path="/cadastroVeiculos" element={<CadastroVeiculos />}/>
-                    <Route path="/veiculo/edit/:id" element={<CadastroVeiculos />}/>
+                    <Route
+                        path="/usuario/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <Cadastro />
+                            </ProtectedRoute>
+                        }
+                    />
+    
+
+                    {/* Marcas */}
+                    <Route
+                        path="/marcas"
+                        element={
+                            <ProtectedRoute>
+                                <Marcas />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    <Route
+                        path="/cadastroMarcas"
+                        element={
+                            <ProtectedRoute>
+                                <CadastroMarcas />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    <Route
+                        path="/marca/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <CadastroMarcas />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    {/* Modelos */}
+                    <Route
+                        path="/modelos"
+                        element={
+                            <ProtectedRoute>
+                                <Modelos />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    <Route
+                        path="/cadastroModelos"
+                        element={
+                            <ProtectedRoute>
+                                <CadastroModelos />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    <Route
+                        path="/modelo/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <CadastroModelos />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    {/* Veículos */}
+                    <Route
+                        path="/veiculos"
+                        element={
+                            <ProtectedRoute>
+                                <Veiculos />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    <Route
+                        path="/cadastroVeiculos"
+                        element={
+                            <ProtectedRoute>
+                                <CadastroVeiculos />
+                            </ProtectedRoute>
+                        }
+                    />
+
+
+                    <Route
+                        path="/veiculo/edit/:id"
+                        element={
+                            <ProtectedRoute>
+                                <CadastroVeiculos />
+                            </ProtectedRoute>
+                        }
+                    />
 
                 </Routes>
+
             </main>
+
 
             <footer>
                 <Footer />
             </footer>
+
         </>
     );
 }

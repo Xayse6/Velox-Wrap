@@ -151,29 +151,25 @@ export default function UsuarioForm() {
                             />
                         </div>
 
-                        <div>
-                            <label htmlFor="senha">
-                                {modoEdicao
-                                    ? "Nova Senha"
-                                    : "Senha"}
-                            </label>
+                        {!modoEdicao && (
+                            <div>
+                                <label htmlFor="senha">
+                                    Senha
+                                </label>
 
-                            <input
-                                type="password"
-                                id="senha"
-                                name="senha"
-                                placeholder={
-                                    modoEdicao
-                                        ? "Deixe vazio para manter a senha"
-                                        : "Digite sua senha"
-                                }
-                                value={senha}
-                                onChange={(event) =>
-                                    setSenha(event.target.value)
-                                }
-                                required={!modoEdicao}
-                            />
-                        </div>
+                                <input
+                                    type="password"
+                                    id="senha"
+                                    name="senha"
+                                    placeholder="Digite sua senha"
+                                    value={senha}
+                                    onChange={(event) =>
+                                        setSenha(event.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+                        )}
 
                         <button
                             type="submit"

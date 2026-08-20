@@ -1,95 +1,155 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import "./css/navbar.css";
 
-export default function navbar() {
-  return (
-    <nav className="navbar">
-      <div className="navbar-container">
 
-        {/* Logo */}
-        <Link className="navbar-brand" to="/">
-          <img
-            src="/src/assets/logo.png"
-            alt="Velox Wrap"
-            className="navbar-logo"
-          />
+export default function Navbar() {
 
-          <span className="navbar-title">
-            Velox Wrap
-          </span>
-        </Link>
+    const navigate = useNavigate();
+    const [token, setToken] = useState(
+        localStorage.getItem("token")
+    );
 
-        {/* Botão Mobile */}
-        <button
-          className="navbar-toggle"
-          type="button"
-          aria-label="Abrir menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+    const [usuario, setUsuario] = useState(
+        JSON.parse(
+            localStorage.getItem("usuario") || "null"
+        )
+    );
 
-        {/* Menu */}
-        <div className="navbar-menu">
-          <ul className="navbar-nav">
+    useEffect(() => {
 
-            <li>
-              <Link className="nav-link" to="/galeria">
-                Galeria
-              </Link>
-            </li>
+        function atualizarNavbar(){
+            setToken(
+                localStorage.getItem("token")
+            );
+            setUsuario(
+                JSON.parse(
+                    localStorage.getItem("usuario") || "null"
+                )
+            );
 
-            <li>
-              <Link className="nav-link" to="/servicos">
-                Serviços
-              </Link>
-            </li>
+        }
+        window.addEventListener(
+            "login",
+            atualizarNavbar
+        );
 
-            <li>
-              <Link className="nav-link" to="/contato">
-                Contato
-              </Link>
-            </li>
+        return () => {
 
-            <li>
-              <Link className="nav-button" to="/usuarios">
-                Usuários
-              </Link>
-            </li>
+            window.removeEventListener(
+                "login",
+                atualizarNavbar
+            );
 
-            <li>
-              <Link className="nav-button" to="/veiculos">
-                Veículos
-              </Link>
-            </li>
+        };
 
-            <li>
-              <Link className="nav-button" to="/modelos">
-                Modelos
-              </Link>
-            </li>
 
-            <li>
-              <Link className="nav-button" to="/marcas">
-                Marcas
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-button" to="/cadastro">
-                Cadastro
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-button" to="/login">
-                Login
-              </Link>
-            </li>
+    }, []);
 
-          </ul>
-        </div>
+    function logout(){
 
-      </div>
-    </nav>
-  );
+        localStorage.removeItem("token");
+
+        localStorage.removeItem("usuario");
+
+
+        setToken(null);
+
+        setUsuario(null);
+
+
+        navigate("/login");
+
+    }
+    return (
+        <nav className="navbar">
+            <div className="navbar-container">
+                <Link 
+                    className="navbar-brand" 
+                    to="/"
+                >
+                    <img
+                        src="/src/assets/logo.png"
+                        alt="Velox Wrap"
+                        className="navbar-logo"
+                    />
+
+                    <span className="navbar-title">
+                        Velox Wrap
+                    </span>
+                </Link>
+                <div className="navbar-menu">
+                    <ul className="navbar-nav">
+                        <li>
+                            <Link 
+                                className="nav-link"
+                                to="/galeria"
+                            >
+                                Galeria
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link 
+                                className="nav-link"
+                                to="/servicos"
+                            >
+                                Serviços
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link 
+                                className="nav-link"
+                                to="/contato"
+                            >
+                                Contato
+                            </Link>
+                        </li>
+
+                        {token && (
+
+                            <>
+                                <li>
+                                    <Link className="nav-button" to="/veiculos"> Veículos </Link>
+                                </li>
+
+                                {usuario?.tipo === "admin" && (
+
+                                    <>
+                                    <li>
+                                        <Link className="nav-button"to="/usuarios"> Usuários </Link>
+                                    </li>
+
+                                    <li>
+                                        <Link className="nav-button"to="/modelos"> Modelos </Link>
+                                    </li>
+
+                                    <li>
+                                        <Link className="nav-button" to="/marcas"> Marcas </Link>
+                                    </li>
+                                    </>
+                                )}
+                                <li>
+                                    <button className="nav-button" onClick={logout}> Sair </button>
+                                </li>
+                            </>
+                        )}
+                        {!token && (
+                            <>
+                                <li>
+                                    <Link className="nav-button" to="/cadastro"> Cadastro </Link>
+                                </li>
+
+                                <li>
+                                    <Link className="nav-button" to="/login"> Login </Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    );
 }
