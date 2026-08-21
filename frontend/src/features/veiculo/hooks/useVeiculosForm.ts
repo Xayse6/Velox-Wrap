@@ -11,7 +11,7 @@ import {
     inserirVeiculo,
 } from "../services/veiculosService";
 
-import type { Usuario } from "../../usuario/types/user";
+import type { Usuario } from "../../perfil/types/user";
 import type { Modelo } from "../../modelo/types/modelo";
 
 

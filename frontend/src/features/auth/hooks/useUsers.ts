@@ -18,10 +18,6 @@ export default function useUsers() {
     const [erro, setErro] =
         useState("");
 
-    // ==========================================
-    // CARREGAR USUÁRIOS
-    // ==========================================
-
     useEffect(() => {
 
         async function carregarUsuarios() {
@@ -59,10 +55,6 @@ export default function useUsers() {
         carregarUsuarios();
 
     }, []);
-
-    // ==========================================
-    // EXCLUIR USUÁRIO
-    // ==========================================
 
     const deleteUsuarioById = async (
         id_Usuario: number
@@ -106,10 +98,6 @@ export default function useUsers() {
             );
         }
     };
-
-    // ==========================================
-    // RETORNO
-    // ==========================================
 
     return {
         usuarios,

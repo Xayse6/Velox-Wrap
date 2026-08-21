@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:3000/api";
 
-import type { Usuario } from "../../usuario/types/user";
+import type { Usuario } from "../../auth/types/user";
 import type { Modelo } from "../../modelo/types/modelo";
 import type {
     Veiculo,

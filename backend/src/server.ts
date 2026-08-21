@@ -12,8 +12,33 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+
+// ===============================
+// MIDDLEWARES
+// ===============================
+
+app.use(
+    cors({
+        origin: "*",
+        methods: [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+        ],
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization"
+        ]
+    })
+);
+
 app.use(express.json());
+
+
+// ===============================
+// ROTAS
+// ===============================
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
@@ -21,17 +46,69 @@ app.use("/api", marcaRoutes);
 app.use("/api", modeloRoutes);
 app.use("/api", veiculoRoutes);
 
-app.use(
-  (err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    console.error(err);
-    res.status(500).json({
-      mensagem: "Erro interno do servidor",
+
+// ===============================
+// TESTE
+// ===============================
+
+app.get("/", (_req, res) => {
+
+    res.json({
+        mensagem: "API Velox Wrap funcionando!"
     });
-  }
+
+});
+
+
+// teste de rede
+app.get("/teste", (_req, res)=>{
+
+    res.json({
+        status:"online",
+        servidor:"backend",
+        ip:"192.168.1.4"
+    });
+
+});
+
+
+// ===============================
+// ERRO GLOBAL
+// ===============================
+
+app.use(
+    (
+        err:any,
+        _req:express.Request,
+        res:express.Response,
+        _next:express.NextFunction
+    )=>{
+
+        console.error(err);
+
+        res.status(500).json({
+            mensagem:"Erro interno do servidor"
+        });
+
+    }
 );
 
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// ===============================
+// SERVIDOR
+// ===============================
+
+const PORT = Number(process.env.PORT) || 3000;
+
+
+app.listen(
+    PORT,
+    "0.0.0.0",
+    ()=>{
+
+        console.log(
+            `Servidor rodando em http://192.168.1.4:${PORT}`
+        );
+
+    }
+);

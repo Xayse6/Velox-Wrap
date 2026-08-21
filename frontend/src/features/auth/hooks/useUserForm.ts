@@ -3,7 +3,7 @@ import {
   inserirUsuario,
   buscarUsuario,
   editarUsuario,
-} from "../../usuario/services/usuarioService";
+} from "../services/usuarioService";
 
 export default function useUserForm(id?: string) {
   const [nome, setNome] = useState<string>("");

@@ -1,59 +1,57 @@
 import { Link } from "react-router-dom";
-import "../css/veiculo.css";
-import useVeiculos from "../hooks/useVeiculos";
+import "../css/usuario.css";
+import useUsers from "../hooks/useUsers";
 
-export default function Veiculos() {
-  const { veiculos, carregando, erro, deleteVeiculo } = useVeiculos();
+export default function Users() {
+  const { usuarios, carregando, erro, deleteUser } = useUsers();
 
   return (
-    <main className="veiculos-container">
-      <section className="veiculos-header">
+    <main className="usuarios-container">
+      <section className="usuarios-header">
         <div>
-          <h1>Veículos</h1>
-          <p>Gerenciamento completo de veículos do sistema</p>
+          <h1>Usuários</h1>
+          <p>Gerenciamento completo de usuários do sistema</p>
         </div>
 
-        <Link to="/cadastroVeiculos" className="btn-novo">
-          <i className="fas fa-car"></i>
-          Novo Veículo
+        <Link to="/cadastro" className="btn-novo">
+          <i className="fas fa-user-plus"></i>
+          Novo Usuário
         </Link>
       </section>
 
-      <section className="veiculos-card">
+      <section className="usuarios-card">
         <div className="table-container">
-          {carregando && <p>Carregando veículos...</p>}
+          {carregando && <p>Carregando usuários...</p>}
 
           {erro && <p>{erro}</p>}
 
           {!carregando && !erro && (
-            <table className="veiculos-table">
+            <table className="usuarios-table">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Usuário</th>
-                  <th>Marca</th>
-                  <th>Modelo</th>
-                  <th>Ano</th>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>Email</th>
                   <th>Ações</th>
                 </tr>
               </thead>
 
               <tbody>
-                {veiculos.map((veiculo) => (
-                  <tr key={veiculo.id_Veiculo}>
+                {usuarios.map((usuario) => (
+                  <tr key={usuario.id_Usuario}>
                     <td className="text-center" data-label="ID">
-                      {veiculo.id_Veiculo}
+                      {usuario.id_Usuario}
                     </td>
 
-                    <td data-label="Usuário">{veiculo.nome_Usuario}</td>
-                    <td data-label="Marca">{veiculo.nome_Marca}</td>
-                    <td data-label="Modelo">{veiculo.nome_Modelo}</td>
-                    <td data-label="Ano">{veiculo.ano_Modelo}</td>
+                    <td data-label="Nome">{usuario.nome_Usuario}</td>
+                    <td data-label="CPF">{usuario.cpf_Usuario}</td>
+                    <td data-label="Email">{usuario.email_Usuario}</td>
 
                     <td data-label="Ações">
                       <div className="acoes">
                         <Link
-                          to={`/veiculo/edit/${veiculo.id_Veiculo}`}
+                          to={`/usuario/edit/${usuario.id_Usuario}`}
                           className="btn-editar"
                         >
                           <i className="fas fa-edit"></i>
@@ -64,7 +62,7 @@ export default function Veiculos() {
                           type="button"
                           className="btn-excluir"
                           title="Excluir"
-                          onClick={() => deleteVeiculo(veiculo.id_Veiculo)}
+                          onClick={() => deleteUser(usuario.id_Usuario)}
                         >
                           <i className="fas fa-trash"></i>
                           Excluir

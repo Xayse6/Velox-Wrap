@@ -2,14 +2,14 @@ import { Routes, Route } from "react-router-dom";
 
 import "./styles/global.css";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/pages/Navbar";
+import Footer from "./components/pages/Footer";
 
 import ProtectedRoute from "./features/auth/pages/ProtectedRoute";
 
 import Home from "./features/home/pages/Home";
 
-import Usuarios from "./features/usuario/pages/Usuarios";
+import Usuarios from "./features/auth/pages/Usuarios";
 import Cadastro from "./features/auth/pages/Cadastro";
 
 import Marcas from "./features/marca/pages/Marcas";
@@ -22,6 +22,8 @@ import Veiculos from "./features/veiculo/pages/Veiculos";
 import CadastroVeiculos from "./features/veiculo/pages/CadastroVeiculos";
 
 import Login from "./features/auth/pages/Login";
+
+import Profile from "./features/perfil/pages/Perfil";
 
 export default function App() {
   return (
@@ -42,6 +44,13 @@ export default function App() {
               <ProtectedRoute>
                 <Usuarios />
               </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+                <Profile />
             }
           />
           <Route
