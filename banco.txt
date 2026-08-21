@@ -3,15 +3,16 @@ DROP TABLE IF EXISTS modelos CASCADE;
 DROP TABLE IF EXISTS marcas CASCADE;
 DROP TABLE IF EXISTS usuarios CASCADE;
 
-
 CREATE TABLE usuarios (
     id_usuario SERIAL PRIMARY KEY,
-    nome_usuario VARCHAR(100) NOT NULL UNIQUE,
+    nome_usuario VARCHAR(100) NOT NULL,
     cpf_usuario VARCHAR(14) NOT NULL UNIQUE,
     email_usuario VARCHAR(255) NOT NULL UNIQUE,
-    senha_usuario VARCHAR(255) NOT NULL
+    senha_usuario VARCHAR(255) NOT NULL,
+    tipo_usuario VARCHAR(20) NOT NULL DEFAULT 'usuario',
+    CONSTRAINT tipo_usuario_check
+        CHECK (tipo_usuario IN ('admin', 'usuario'))
 );
-
 
 CREATE TABLE marcas (
     id_marca SERIAL PRIMARY KEY,
@@ -19,115 +20,119 @@ CREATE TABLE marcas (
     sigla_marca CHAR(5) NOT NULL UNIQUE
 );
 
-
 CREATE TABLE modelos (
     id_modelo SERIAL PRIMARY KEY,
     nome_modelo VARCHAR(100) NOT NULL,
     ano_modelo INTEGER NOT NULL,
-
     id_marca INTEGER NOT NULL,
-
     CONSTRAINT fk_modelo_marca
         FOREIGN KEY (id_marca)
         REFERENCES marcas(id_marca),
-
     CONSTRAINT unique_modelo_ano
-        UNIQUE(nome_modelo, ano_modelo, id_marca)
+        UNIQUE (nome_modelo, ano_modelo, id_marca)
 );
-
 
 CREATE TABLE veiculos (
     id_veiculo SERIAL PRIMARY KEY,
-
     id_usuario INTEGER NOT NULL,
     id_modelo INTEGER NOT NULL,
-
     CONSTRAINT fk_veiculo_usuario
         FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id_usuario)
         ON DELETE CASCADE,
-
     CONSTRAINT fk_veiculo_modelo
         FOREIGN KEY (id_modelo)
         REFERENCES modelos(id_modelo)
         ON DELETE RESTRICT
 );
 
+INSERT INTO usuarios (
+    nome_usuario,
+    cpf_usuario,
+    email_usuario,
+    senha_usuario,
+    tipo_usuario
+) VALUES
+(
+    'João Silva',
+    '11111111111',
+    'joao@email.com',
+    '$2b$10$dNz0QH1rmnqpkHNVqgNMUupUNO/uTz2.L8uk//O.r57XdnqENousy',
+    'admin'
+),
+(
+    'Maria Santos',
+    '22222222222',
+    'maria@email.com',
+    '$2b$10$dNz0QH1rmnqpkHNVqgNMUupUNO/uTz2.L8uk//O.r57XdnqENousy',
+    'usuario'
+),
+(
+    'Carlos Oliveira',
+    '33333333333',
+    'carlos@email.com',
+    '$2b$10$dNz0QH1rmnqpkHNVqgNMUupUNO/uTz2.L8uk//O.r57XdnqENousy',
+    'usuario'
+),
+(
+    'Ana Souza',
+    '44444444444',
+    'ana@email.com',
+    '$2b$10$dNz0QH1rmnqpkHNVqgNMUupUNO/uTz2.L8uk//O.r57XdnqENousy',
+    'usuario'
+),
+(
+    'ADM',
+    '00000000000',
+    'admin@gmail.com',
+    '$2b$10$dNz0QH1rmnqpkHNVqgNMUupUNO/uTz2.L8uk//O.r57XdnqENousy',
+    'admin'
+);
 
-INSERT INTO usuarios 
-(nome_usuario, cpf_usuario, email_usuario, senha_usuario)
-VALUES
-('João Silva','11111111111','joao@email.com','$2b$10$EXEMPLO'),
-('Maria Santos','22222222222','maria@email.com','$2b$10$EXEMPLO'),
-('Carlos Oliveira','33333333333','carlos@email.com','$2b$10$EXEMPLO'),
-('Ana Souza','44444444444','ana@email.com','$2b$10$EXEMPLO');
+INSERT INTO marcas (nome_marca, sigla_marca) VALUES
+('Toyota', 'TOY'),
+('Honda', 'HON'),
+('Volkswagen', 'VW'),
+('Chevrolet', 'CHE'),
+('Ford', 'FORD'),
+('Fiat', 'FIAT'),
+('Hyundai', 'HYU'),
+('Nissan', 'NIS'),
+('BMW', 'BMW'),
+('Audi', 'AUD'),
+('Mercedes-Benz', 'MB');
 
+INSERT INTO modelos (nome_modelo, ano_modelo, id_marca) VALUES
+('Corolla', 2025, 1),
+('Corolla Cross', 2025, 1),
+('Hilux', 2025, 1),
+('Civic', 2025, 2),
+('City', 2025, 2),
+('HR-V', 2025, 2),
+('Polo', 2025, 3),
+('T-Cross', 2025, 3),
+('Nivus', 2025, 3),
+('Onix', 2025, 4),
+('Tracker', 2025, 4),
+('S10', 2025, 4);
 
-INSERT INTO marcas
-(nome_marca, sigla_marca)
-VALUES
-('Toyota','TOY'),
-('Honda','HON'),
-('Volkswagen','VW'),
-('Chevrolet','CHE'),
-('Ford','FORD'),
-('Fiat','FIAT'),
-('Hyundai','HYU'),
-('Nissan','NIS'),
-('BMW','BMW'),
-('Audi','AUD'),
-('Mercedes-Benz','MB');
+INSERT INTO veiculos (id_usuario, id_modelo) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4);
 
-
-INSERT INTO modelos
-(nome_modelo, ano_modelo, id_marca)
-VALUES
-
-('Corolla',2025,1),
-('Corolla Cross',2025,1),
-('Hilux',2025,1),
-
-('Civic',2025,2),
-('City',2025,2),
-('HR-V',2025,2),
-
-('Polo',2025,3),
-('T-Cross',2025,3),
-('Nivus',2025,3),
-
-('Onix',2025,4),
-('Tracker',2025,4),
-('S10',2025,4);
-
-
-INSERT INTO veiculos
-(id_usuario,id_modelo)
-VALUES
-(1,1),
-(1,2),
-(2,3),
-(2,4);
-
-
-SELECT 
+SELECT
     v.id_veiculo,
-
     u.nome_usuario,
-
+    u.tipo_usuario,
     m.nome_modelo,
     m.ano_modelo,
-
     ma.nome_marca,
     ma.sigla_marca
-
-
 FROM veiculos v
+INNER JOIN usuarios u ON u.id_usuario = v.id_usuario
+INNER JOIN modelos m ON m.id_modelo = v.id_modelo
+INNER JOIN marcas ma ON ma.id_marca = m.id_marca;
 
-INNER JOIN usuarios u
-ON u.id_usuario = v.id_usuario
-
-INNER JOIN modelos m
-ON m.id_modelo = v.id_modelo
-
-INNER JOIN marcas ma
-ON ma.id_marca = m.id_marca;
+SELECT * FROM veiculos;

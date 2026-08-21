@@ -4,11 +4,6 @@ import { pool } from "../config/database";
 
 const router = Router();
 
-// =========================================================
-// MODELOS
-// =========================================================
-
-// LISTAR MODELOS
 router.get("/modelos", async (_req, res) => {
     try {
         const resultado = await pool.query(`
@@ -40,8 +35,6 @@ router.get("/modelos", async (_req, res) => {
     }
 });
 
-
-// BUSCAR MODELO POR ID
 router.get("/modelos/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -83,8 +76,6 @@ router.get("/modelos/:id", async (req, res) => {
     }
 });
 
-
-// CADASTRAR MODELO
 router.post("/modelos", async (req, res) => {
     try {
         const {
@@ -139,8 +130,6 @@ router.post("/modelos", async (req, res) => {
     }
 });
 
-
-// EDITAR MODELO
 router.put("/modelos/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -204,8 +193,6 @@ router.put("/modelos/:id", async (req, res) => {
     }
 });
 
-
-// EXCLUIR MODELO
 router.delete("/modelos/:id", async (req, res) => {
     try {
         const { id } = req.params;

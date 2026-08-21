@@ -4,10 +4,6 @@ import { pool } from "../config/database";
 
 const router = Router();
 
-// ==========================================
-// CADASTRAR MARCA
-// ==========================================
-
 router.post("/marcas", async (req, res) => {
     try {
         const {
@@ -60,10 +56,6 @@ router.post("/marcas", async (req, res) => {
     }
 });
 
-// ==========================================
-// LISTAR MARCAS
-// ==========================================
-
 router.get("/marcas", async (_req, res) => {
     try {
         const resultado = await pool.query(
@@ -96,10 +88,6 @@ router.get("/marcas", async (_req, res) => {
         });
     }
 });
-
-// ==========================================
-// BUSCAR MARCA POR ID
-// ==========================================
 
 router.get("/marcas/:id", async (req, res) => {
     try {
@@ -142,10 +130,6 @@ router.get("/marcas/:id", async (req, res) => {
         });
     }
 });
-
-// ==========================================
-// EDITAR MARCA
-// ==========================================
 
 router.put("/marcas/:id", async (req, res) => {
     try {
@@ -207,10 +191,6 @@ router.put("/marcas/:id", async (req, res) => {
         });
     }
 });
-
-// ==========================================
-// EXCLUIR MARCA
-// ==========================================
 
 router.delete("/marcas/:id", async (req, res) => {
     try {
