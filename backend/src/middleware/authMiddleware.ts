@@ -1,36 +1,53 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-interface TokenPayload {
-  id: number;
-  email: string;
-  tipo: string;
+
+export interface UsuarioToken {
+    id: number;
+    email: string;
+    tipo: string;
 }
 
-export interface AuthRequest extends Request {
-  usuario?: TokenPayload;
-}
 
 export function verificarToken(
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) {
-  const token = req.headers.authorization?.split(" ")[1];
 
-  if (!token) {
-    return res.status(401).json({ mensagem: "Token não informado" });
-  }
+    const authHeader = req.headers.authorization;
 
-  try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as TokenPayload;
 
-    req.usuario = decoded;
-    next();
-  } catch {
-    return res.status(401).json({ mensagem: "Token inválido" });
-  }
+    if (!authHeader) {
+        return res.status(401).json({
+            mensagem: "Token não informado"
+        });
+    }
+
+
+    const token = authHeader.split(" ")[1];
+
+
+    try {
+
+        const usuario = jwt.verify(
+            token,
+            process.env.JWT_SECRET as string
+        ) as UsuarioToken;
+
+
+        req.usuario = usuario;
+
+
+        next();
+
+
+    } catch(error) {
+
+        return res.status(401).json({
+            mensagem:"Token inválido"
+        });
+
+    }
+
 }

@@ -1,325 +1,332 @@
 import { Router } from "express";
+
 import { pool } from "../config/database";
+
+import { verificarToken } from "../middleware/authMiddleware";
+
 
 const router = Router();
 
-router.get("/veiculos", async (_req, res) => {
-
-    try {
-
-        const resultado = await pool.query(`
-
-            SELECT
-
-                v.id_veiculo AS "id_Veiculo",
-
-                v.id_usuario AS "id_Usuario",
-
-                v.id_modelo AS "id_Modelo",
-
-                u.nome_usuario AS "nome_Usuario",
-
-                mo.nome_modelo AS "nome_Modelo",
-
-                mo.ano_modelo AS "ano_Modelo",
-
-                ma.id_marca AS "id_Marca",
-
-                ma.nome_marca AS "nome_Marca",
-
-                ma.sigla_marca AS "sigla_Marca"
 
 
-            FROM veiculos v
+// LISTAR VEÍCULOS DO USUÁRIO
 
-            INNER JOIN usuarios u
-                ON v.id_usuario = u.id_usuario
-
-            INNER JOIN modelos mo
-                ON v.id_modelo = mo.id_modelo
-
-            INNER JOIN marcas ma
-                ON mo.id_marca = ma.id_marca
+router.get(
+"/veiculos",
+verificarToken,
+async(req,res)=>{
 
 
-            ORDER BY v.id_veiculo;
-
-        `);
+try {
 
 
-        return res.status(200).json(resultado.rows);
+const idUsuario = req.usuario.id;
 
 
-    } catch (error) {
 
-        console.error("ERRO AO BUSCAR VEÍCULOS");
-        console.error(error);
+const resultado = await pool.query(`
 
-        return res.status(500).json({
-            mensagem: "Erro ao buscar veículos"
-        });
+SELECT
 
-    }
+v.id_veiculo AS "id_Veiculo",
 
-});
+v.id_usuario AS "id_Usuario",
 
+v.id_modelo AS "id_Modelo",
 
-router.get("/veiculos/:id", async (req, res) => {
+u.nome_usuario AS "nome_Usuario",
 
-    try {
+mo.nome_modelo AS "nome_Modelo",
 
-        const id = Number(req.params.id);
+mo.ano_modelo AS "ano_Modelo",
 
+ma.id_marca AS "id_Marca",
 
-        const resultado = await pool.query(`
+ma.nome_marca AS "nome_Marca",
 
-            SELECT
-
-                v.id_veiculo AS "id_Veiculo",
-
-                v.id_usuario AS "id_Usuario",
-
-                v.id_modelo AS "id_Modelo",
-
-                u.nome_usuario AS "nome_Usuario",
-
-                mo.nome_modelo AS "nome_Modelo",
-
-                mo.ano_modelo AS "ano_Modelo",
-
-                ma.id_marca AS "id_Marca",
-
-                ma.nome_marca AS "nome_Marca",
-
-                ma.sigla_marca AS "sigla_Marca"
+ma.sigla_marca AS "sigla_Marca"
 
 
-            FROM veiculos v
-
-            INNER JOIN usuarios u
-                ON v.id_usuario = u.id_usuario
-
-            INNER JOIN modelos mo
-                ON v.id_modelo = mo.id_modelo
-
-            INNER JOIN marcas ma
-                ON mo.id_marca = ma.id_marca
+FROM veiculos v
 
 
-            WHERE v.id_veiculo = $1;
-
-        `,[id]);
-
-
-        if(resultado.rows.length === 0){
-
-            return res.status(404).json({
-                mensagem:"Veículo não encontrado"
-            });
-
-        }
+INNER JOIN usuarios u
+ON v.id_usuario = u.id_usuario
 
 
-        return res.json(resultado.rows[0]);
+INNER JOIN modelos mo
+ON v.id_modelo = mo.id_modelo
 
 
-    } catch(error){
+INNER JOIN marcas ma
+ON mo.id_marca = ma.id_marca
 
-        console.error(error);
 
-        return res.status(500).json({
-            mensagem:"Erro ao buscar veículo"
-        });
 
-    }
+WHERE v.id_usuario = $1
+
+
+ORDER BY v.id_veiculo
+
+
+`,
+[idUsuario]);
+
+
+
+return res.json(resultado.rows);
+
+
+
+}catch(error){
+
+
+console.error(error);
+
+
+return res.status(500).json({
+
+mensagem:"Erro ao buscar veículos"
 
 });
 
-router.post("/veiculos", async (req,res)=>{
 
-    try{
-
-        const {
-            id_Usuario,
-            id_Modelo
-        } = req.body;
-
-
-        const resultado = await pool.query(`
-
-            INSERT INTO veiculos
-            (
-                id_usuario,
-                id_modelo
-            )
-
-            VALUES
-            ($1,$2)
-
-
-            RETURNING
-
-            id_veiculo AS "id_Veiculo",
-            id_usuario AS "id_Usuario",
-            id_modelo AS "id_Modelo";
-
-        `,
-        [
-            id_Usuario,
-            id_Modelo
-        ]);
-
-
-
-        return res.status(201).json(resultado.rows[0]);
-
-
-
-    }catch(error){
-
-        console.error(error);
-
-        return res.status(500).json({
-            mensagem:"Erro ao cadastrar veículo"
-        });
-
-    }
-
-});
-
-
-
-// ============================================================
-// EDITAR
-// ============================================================
-
-router.put("/veiculos/:id", async(req,res)=>{
-
-
-    try{
-
-
-        const id = Number(req.params.id);
-
-
-        const {
-            id_Usuario,
-            id_Modelo
-        } = req.body;
-
-
-
-        const resultado = await pool.query(`
-
-
-            UPDATE veiculos
-
-            SET
-
-            id_usuario=$1,
-            id_modelo=$2
-
-
-            WHERE id_veiculo=$3
-
-
-            RETURNING
-
-            id_veiculo AS "id_Veiculo",
-            id_usuario AS "id_Usuario",
-            id_modelo AS "id_Modelo";
-
-
-        `,
-        [
-            id_Usuario,
-            id_Modelo,
-            id
-        ]);
-
-
-
-        return res.json(resultado.rows[0]);
-
-
-
-    }catch(error){
-
-
-        console.error(error);
-
-
-        return res.status(500).json({
-            mensagem:"Erro ao atualizar veículo"
-        });
-
-
-    }
+}
 
 
 });
 
 
 
-// ============================================================
-// EXCLUIR
-// ============================================================
 
-router.delete("/veiculos/:id", async(req,res)=>{
+// BUSCAR UM VEÍCULO
 
-
-    try{
-
-
-        const id = Number(req.params.id);
+router.get(
+"/veiculos/:id",
+verificarToken,
+async(req,res)=>{
 
 
-        const resultado = await pool.query(`
-
-            DELETE FROM veiculos
-
-            WHERE id_veiculo=$1
-
-            RETURNING id_veiculo;
+try{
 
 
-        `,
-        [id]);
+const id = Number(req.params.id);
+
+
+const resultado = await pool.query(`
+
+SELECT
+
+v.id_veiculo AS "id_Veiculo",
+
+v.id_usuario AS "id_Usuario",
+
+v.id_modelo AS "id_Modelo",
+
+u.nome_usuario AS "nome_Usuario",
+
+mo.nome_modelo AS "nome_Modelo",
+
+mo.ano_modelo AS "ano_Modelo",
+
+ma.nome_marca AS "nome_Marca"
+
+
+FROM veiculos v
+
+
+INNER JOIN usuarios u
+ON v.id_usuario=u.id_usuario
+
+
+INNER JOIN modelos mo
+ON v.id_modelo=mo.id_modelo
+
+
+INNER JOIN marcas ma
+ON mo.id_marca=ma.id_marca
+
+
+WHERE 
+v.id_veiculo=$1
+
+AND
+
+v.id_usuario=$2
+
+
+`,
+[
+id,
+req.usuario.id
+]);
 
 
 
-        if(resultado.rows.length===0){
+if(resultado.rowCount===0){
 
-            return res.status(404).json({
-                mensagem:"Veículo não encontrado"
-            });
+return res.status(404).json({
 
-        }
+mensagem:"Veículo não encontrado"
 
+});
 
-
-        return res.json({
-
-            mensagem:"Veículo excluído com sucesso"
-
-        });
+}
 
 
 
-    }catch(error){
+return res.json(resultado.rows[0]);
 
 
-        console.error(error);
+
+}catch(error){
+
+return res.status(500).json({
+
+mensagem:"Erro ao buscar veículo"
+
+});
+
+}
 
 
-        return res.status(500).json({
-
-            mensagem:"Erro ao excluir veículo"
-
-        });
+});
 
 
-    }
+
+
+
+// CADASTRAR
+
+router.post(
+"/veiculos",
+verificarToken,
+async(req,res)=>{
+
+
+try{
+
+
+const {id_Modelo}=req.body;
+
+
+
+const resultado = await pool.query(`
+
+INSERT INTO veiculos
+
+(
+id_usuario,
+id_modelo
+)
+
+
+VALUES
+($1,$2)
+
+
+RETURNING *
+
+`,
+[
+req.usuario.id,
+id_Modelo
+]);
+
+
+
+return res.status(201).json(resultado.rows[0]);
+
+
+
+}catch(error){
+
+console.error(error);
+
+return res.status(500).json({
+
+mensagem:"Erro ao cadastrar veículo"
+
+});
+
+}
+
+
+});
+
+
+
+
+
+// DELETAR
+
+
+router.delete(
+"/veiculos/:id",
+verificarToken,
+async(req,res)=>{
+
+
+try{
+
+
+const id = Number(req.params.id);
+
+
+
+const resultado = await pool.query(`
+
+DELETE FROM veiculos
+
+WHERE 
+
+id_veiculo=$1
+
+AND
+
+id_usuario=$2
+
+
+RETURNING id_veiculo
+
+
+`,
+[
+id,
+req.usuario.id
+]);
+
+
+
+if(resultado.rowCount===0){
+
+return res.status(404).json({
+
+mensagem:"Veículo não encontrado"
+
+});
+
+}
+
+
+
+return res.json({
+
+mensagem:"Veículo excluído"
+
+});
+
+
+
+}catch(error){
+
+return res.status(500).json({
+
+mensagem:"Erro ao excluir veículo"
+
+});
+
+}
 
 
 });

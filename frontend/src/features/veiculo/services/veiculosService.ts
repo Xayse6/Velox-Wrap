@@ -1,11 +1,12 @@
-const API_URL = "http://localhost:3000/api";
+import api from "../../../service/api";
 
-import type { Usuario } from "../../auth/types/user";
-import type { Modelo } from "../../modelo/types/modelo";
+import type { Usuario } from "../../perfil/types/user";
+
 import type {
     Veiculo,
-    DadosVeiculo,
+    DadosVeiculo
 } from "../types/veiculo";
+
 
 
 // ============================================================
@@ -14,42 +15,26 @@ import type {
 
 export async function getUsuarios(): Promise<Usuario[]> {
 
-    const response = await fetch(
-        `${API_URL}/usuarios`
-    );
+    const response = await api.get("/usuarios");
 
-    const dados = await response.json();
+    return response.data;
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem || "Erro ao buscar usuários"
-        );
-    }
-
-    return dados;
 }
+
 
 
 // ============================================================
 // MODELOS
 // ============================================================
 
-export async function getModelos(): Promise<Modelo[]> {
+export async function getModelos() {
 
-    const response = await fetch(
-        `${API_URL}/modelos`
-    );
+    const response = await api.get("/modelos");
 
-    const dados = await response.json();
+    return response.data;
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem || "Erro ao buscar modelos"
-        );
-    }
-
-    return dados;
 }
+
 
 
 // ============================================================
@@ -58,44 +43,32 @@ export async function getModelos(): Promise<Modelo[]> {
 
 export async function getVeiculos(): Promise<Veiculo[]> {
 
-    const response = await fetch(
-        `${API_URL}/veiculos`
-    );
+    const response = await api.get("/veiculos");
 
-    const dados = await response.json();
+    return response.data;
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem || "Erro ao buscar veículos"
-        );
-    }
-
-    return dados;
 }
 
 
+
 // ============================================================
-// BUSCAR VEÍCULO
+// BUSCAR VEÍCULO POR ID
 // ============================================================
 
 export async function buscarVeiculo(
     id: string
 ): Promise<Veiculo> {
 
-    const response = await fetch(
-        `${API_URL}/veiculos/${id}`
+
+    const response = await api.get(
+        `/veiculos/${id}`
     );
 
-    const dados = await response.json();
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem || "Erro ao buscar veículo"
-        );
-    }
+    return response.data;
 
-    return dados;
 }
+
 
 
 // ============================================================
@@ -103,33 +76,20 @@ export async function buscarVeiculo(
 // ============================================================
 
 export async function inserirVeiculo(
-    veiculo: DadosVeiculo
-): Promise<Veiculo> {
+    dados: DadosVeiculo
+) {
 
-    const response = await fetch(
-        `${API_URL}/veiculos`,
-        {
-            method: "POST",
 
-            headers: {
-                "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify(veiculo),
-        }
+    const response = await api.post(
+        "/veiculos",
+        dados
     );
 
-    const dados = await response.json();
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem ||
-            "Erro ao cadastrar veículo"
-        );
-    }
+    return response.data;
 
-    return dados;
 }
+
 
 
 // ============================================================
@@ -138,33 +98,20 @@ export async function inserirVeiculo(
 
 export async function editarVeiculo(
     id: string,
-    veiculo: DadosVeiculo
-): Promise<Veiculo> {
+    dados: DadosVeiculo
+) {
 
-    const response = await fetch(
-        `${API_URL}/veiculos/${id}`,
-        {
-            method: "PUT",
 
-            headers: {
-                "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify(veiculo),
-        }
+    const response = await api.put(
+        `/veiculos/${id}`,
+        dados
     );
 
-    const dados = await response.json();
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem ||
-            "Erro ao atualizar veículo"
-        );
-    }
+    return response.data;
 
-    return dados;
 }
+
 
 
 // ============================================================
@@ -175,21 +122,12 @@ export async function deleteVeiculo(
     id_Veiculo: number
 ) {
 
-    const response = await fetch(
-        `${API_URL}/veiculos/${id_Veiculo}`,
-        {
-            method: "DELETE",
-        }
+
+    const response = await api.delete(
+        `/veiculos/${id_Veiculo}`
     );
 
-    const dados = await response.json();
 
-    if (!response.ok) {
-        throw new Error(
-            dados.mensagem ||
-            "Erro ao excluir veículo"
-        );
-    }
+    return response.data;
 
-    return dados;
 }

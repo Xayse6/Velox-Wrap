@@ -2,7 +2,7 @@ import type {
     Usuario,
     DadosUsuario,
     DadosEditarUsuario,
-} from "../../perfil/types/user";
+} from "../types/user";
 
 import api from "../../../service/api";
 
